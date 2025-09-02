@@ -1,0 +1,28 @@
+/* Minimalistyczna paleta + responsywność */
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  color: #222;
+  background: #f9f9f9;
+}
+.hero {
+  text-align: center;
+  padding: 4rem 1rem;
+  background: url("../images/hero.jpg") center/cover no-repeat;
+  color: #fff;
+}
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
+}
+.gallery img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+footer {
+  text-align: center;
+  padding: 1rem;
+}
