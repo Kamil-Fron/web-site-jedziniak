@@ -9,7 +9,7 @@ function loadGallery() {
       images.forEach(img => {
         const container = document.createElement('div');
         const image = document.createElement('img');
-        image.src = `/images/${img.filename}`;
+        image.src = `../images/${img.filename}`;
         image.width = 150;
         const btn = document.createElement('button');
         btn.textContent = 'Usuń';

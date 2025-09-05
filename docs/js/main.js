@@ -5,7 +5,7 @@ fetch('/api/gallery')
     const gallery = document.getElementById('gallery');
     images.forEach(img => {
       const el = document.createElement('img');
-      el.src = `/images/${img.filename}`;
+      el.src = `images/${img.filename}`;
       el.alt = img.alt || 'Zdjęcie mebla';
       gallery.appendChild(el);
     });
