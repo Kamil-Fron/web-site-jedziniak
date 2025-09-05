@@ -14,8 +14,8 @@ app.use(session({
   saveUninitialized: false
 }));
 
-const publicDir = path.join(__dirname, '../public');
-const adminDir = path.join(__dirname, '../admin');
+const publicDir = path.join(__dirname, '../docs');
+const adminDir = path.join(__dirname, '../docs/admin');
 app.use(express.static(publicDir));
 app.use('/admin', express.static(adminDir));
 
