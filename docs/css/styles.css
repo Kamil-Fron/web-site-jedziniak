@@ -51,8 +51,10 @@ body {
   background: rgba(0,0,0,0.4);
 }
 .logo {
-  font-weight: 600;
   margin: 0;
+}
+.logo img {
+  height: 40px;
 }
 .nav-cta {
   background: var(--light);
