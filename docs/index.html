@@ -3,20 +3,75 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Meble Nowoczesne</title>
+  <title>Jedziniak Meble</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
   <header class="hero">
-    <h1>Meble Nowoczesne</h1>
-    <p>Wyjątkowe meble do każdego wnętrza</p>
+    <nav class="nav">
+      <h1 class="logo">Jedziniak Meble</h1>
+      <a href="#contact" class="btn nav-cta">Kontakt</a>
+    </nav>
+    <div class="hero-content">
+      <h2>Tworzymy meble, które kochasz</h2>
+      <p>Designerskie projekty z naturalnego drewna prosto z naszej pracowni.</p>
+      <a href="#gallery" class="btn cta">Zobacz ofertę</a>
+    </div>
   </header>
 
-  <section id="gallery" class="gallery">
-    <!-- zdjęcia zostaną wstawione dynamicznie -->
+  <section id="about" class="about section reveal">
+    <div class="container">
+      <h3>O nas</h3>
+      <p>Jedziniak to rodzinna manufaktura mebli premium. Łączymy tradycyjne rzemiosło z
+        nowoczesnym designem, tworząc unikalne elementy wystroju, które przetrwają pokolenia.</p>
+    </div>
   </section>
 
-  <footer>
+  <section id="gallery" class="gallery section reveal">
+    <h3>Nasze produkty</h3>
+    <div class="grid" id="gallery-grid">
+      <!-- obrazy wstawione przez JS -->
+    </div>
+  </section>
+
+  <section id="testimonials" class="testimonials section reveal">
+    <h3>Opinie klientów</h3>
+    <div class="cards">
+      <article class="card">
+        <p>„Stół od Jedziniaka to dzieło sztuki. Solidny i przepiękny.”</p>
+        <span class="author">– Anna</span>
+      </article>
+      <article class="card">
+        <p>„Profesjonalna obsługa i meble najwyższej jakości.”</p>
+        <span class="author">– Michał</span>
+      </article>
+      <article class="card">
+        <p>„Nasza kuchnia wygląda teraz jak z katalogu.”</p>
+        <span class="author">– Katarzyna</span>
+      </article>
+    </div>
+  </section>
+
+  <section id="contact" class="contact section reveal">
+    <h3>Kontakt</h3>
+    <div class="contact-wrapper">
+      <form class="contact-form">
+        <input type="text" name="name" placeholder="Imię i nazwisko" required />
+        <input type="email" name="email" placeholder="Email" required />
+        <textarea name="message" placeholder="Wiadomość" required></textarea>
+        <button type="submit" class="btn">Wyślij</button>
+      </form>
+      <div class="contact-info">
+        <p><strong>Jedziniak Meble</strong></p>
+        <p>ul. Przykładowa 1<br />00-000 Warszawa</p>
+        <p>tel. 123 456 789<br />biuro@jedziniak.pl</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>&copy; 2024 Jedziniak Meble</p>
     <a href="admin/login.html">Panel administracyjny</a>
   </footer>
 
