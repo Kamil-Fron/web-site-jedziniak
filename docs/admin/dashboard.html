@@ -19,6 +19,13 @@
     <section id="gallery-list"></section>
 
     <form id="upload-form" enctype="multipart/form-data">
+      <select name="category">
+        <option value="kuchnia">kuchnia</option>
+        <option value="salon">salon</option>
+        <option value="sypialnia">sypialnia</option>
+        <option value="lazienka">lazienka</option>
+        <option value="inne">inne</option>
+      </select>
       <input type="file" name="image" accept="image/*" required />
       <button type="submit">Dodaj zdjęcie</button>
     </form>
