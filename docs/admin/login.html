@@ -2,14 +2,34 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="refresh" content="0; url=dashboard.html" />
-  <title>Przekierowanie</title>
+  <title>Logowanie</title>
   <link rel="stylesheet" href="../css/styles.css" />
 </head>
 <body>
-  <p>Trwa przekierowywanie do panelu administracyjnego...</p>
+  <form id="login-form">
+    <label>
+      Hasło:
+      <input type="password" name="password" />
+    </label>
+    <button type="submit">Zaloguj</button>
+  </form>
   <script>
-    window.location.href = 'dashboard.html';
+    document
+      .getElementById('login-form')
+      .addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const res = await fetch('/api/login', {
+          method: 'POST',
+          body: formData,
+          credentials: 'same-origin',
+        });
+        if (res.ok) {
+          window.location.href = 'dashboard.html';
+        } else {
+          alert('Nieprawidłowe hasło');
+        }
+      });
   </script>
 </body>
 </html>
