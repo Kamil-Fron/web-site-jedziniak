@@ -38,3 +38,5 @@ if (form) {
     form.reset();
   });
 }
+
+document.getElementById('year').textContent = new Date().getFullYear();

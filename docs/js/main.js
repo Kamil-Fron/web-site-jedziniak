@@ -58,3 +58,5 @@ form.addEventListener('submit', (e) => {
   alert('Dziękujemy za wiadomość!');
   form.reset();
 });
+
+document.getElementById('year').textContent = new Date().getFullYear();
