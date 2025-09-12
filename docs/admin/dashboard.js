@@ -107,8 +107,12 @@ function renderGallery() {
 
 form.addEventListener('submit', e => {
   e.preventDefault();
-  const data = new FormData(form);
+  const formData = new FormData(form);
+  const data = new FormData();
   data.append('category', form.category.value);
+  for (const file of formData.getAll('images')) {
+    data.append('images', file);
+  }
   fetch('/api/upload', { method: 'POST', body: data })
     .then(() => {
       form.reset();
