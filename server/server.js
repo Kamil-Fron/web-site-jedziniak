@@ -38,7 +38,14 @@ app.get('/api/gallery', (req, res) => {
       images = images.filter(img => img.category === category);
     }
 
-    res.json(images);
+    const mapped = images.map(img => {
+      const mappedImg = { src: '/images/' + img.filename };
+      if (img.alt) mappedImg.alt = img.alt;
+      else if (img.category) mappedImg.alt = img.category;
+      return mappedImg;
+    });
+
+    res.json(mapped);
   });
 });
 
