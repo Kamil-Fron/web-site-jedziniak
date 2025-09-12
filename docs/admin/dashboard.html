@@ -4,17 +4,25 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Panel administracyjny</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/styles.css" />
 </head>
 <body>
-  <h2>Zarządzanie galerią</h2>
+  <nav class="nav">
+    <h1 class="logo"><a href="../index.html"><img src="../images/logo.png" alt="Vikimeble logo" /></a></h1>
+    <a href="../index.html#gallery" class="btn">Galeria</a>
+    <a href="../index.html#contact" class="btn nav-cta">Kontakt</a>
+  </nav>
+  <main>
+    <h2>Zarządzanie galerią</h2>
 
-  <section id="gallery-list"></section>
+    <section id="gallery-list"></section>
 
-  <form id="upload-form" enctype="multipart/form-data">
-    <input type="file" name="image" accept="image/*" required />
-    <button type="submit">Dodaj zdjęcie</button>
-  </form>
+    <form id="upload-form" enctype="multipart/form-data">
+      <input type="file" name="image" accept="image/*" required />
+      <button type="submit">Dodaj zdjęcie</button>
+    </form>
+  </main>
 
   <script src="dashboard.js"></script>
 </body>
