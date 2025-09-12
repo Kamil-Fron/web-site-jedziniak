@@ -110,11 +110,20 @@ function renderGallery() {
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.textContent = 'Usuń';
-      btn.onclick = () => {
-        fetch(`/api/gallery/${img.id}`, { method: 'DELETE', credentials: 'include' })
-          .then(res => {
-            if (res.ok) loadGallery();
-          });
+      btn.onclick = async () => {
+        btn.disabled = true;
+        try {
+          const res = await fetch(`/api/gallery/${img.id}`, { method: 'DELETE', credentials: 'include' });
+          if (res.ok) {
+            loadGallery();
+          } else {
+            alert('Nie udało się usunąć zdjęcia.');
+          }
+        } catch (err) {
+          alert('Wystąpił błąd podczas usuwania zdjęcia.');
+        } finally {
+          btn.disabled = false;
+        }
       };
       wrapper.appendChild(image);
       wrapper.appendChild(btn);
@@ -125,23 +134,36 @@ function renderGallery() {
   });
 }
 
-form.addEventListener('submit', e => {
+const submitBtn = form.querySelector('button[type="submit"]');
+
+form.addEventListener('submit', async e => {
   e.preventDefault();
-  const formData = new FormData(form);
-  const data = new FormData();
-  data.append('category', form.category.value);
-  for (const file of formData.getAll('images')) {
-    data.append('images', file);
+  submitBtn.disabled = true;
+  try {
+    const formData = new FormData(form);
+    const data = new FormData();
+    data.append('category', form.category.value);
+    for (const file of formData.getAll('images')) {
+      data.append('images', file);
+    }
+    const uploadRes = await fetch('/api/upload', { method: 'POST', body: data, credentials: 'include' });
+    if (!uploadRes.ok) {
+      throw new Error('Upload failed');
+    }
+    const refreshRes = await fetch('/api/refresh-categories');
+    if (!refreshRes.ok) {
+      throw new Error('Refresh failed');
+    }
+    form.reset();
+    preview.innerHTML = '';
+    fileInput.value = '';
+    loadGallery();
+    refreshPreviews();
+  } catch (err) {
+    alert('Wystąpił błąd podczas przesyłania plików.');
+  } finally {
+    submitBtn.disabled = false;
   }
-  fetch('/api/upload', { method: 'POST', body: data, credentials: 'include' })
-    .then(() => fetch('/api/refresh-categories'))
-    .then(() => {
-      form.reset();
-      preview.innerHTML = '';
-      fileInput.value = '';
-      loadGallery();
-      refreshPreviews();
-    });
 });
 
 loadGallery();
