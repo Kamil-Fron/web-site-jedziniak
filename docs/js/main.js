@@ -3,12 +3,12 @@
 function renderPreview(sectionId, images, link) {
   const container = document.getElementById(sectionId);
   if (!container) return;
-  images.forEach(({ src, alt }) => {
+  images.forEach(image => {
     const a = document.createElement('a');
     a.href = link;
     const img = document.createElement('img');
-    img.src = src;
-    img.alt = alt;
+    img.src = image.src;
+    img.alt = image.alt || '';
     a.appendChild(img);
     container.appendChild(a);
   });
