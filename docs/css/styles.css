@@ -87,6 +87,40 @@ body {
   text-align: center;
 }
 
+/* Oferta */
+.offer {
+  text-align: center;
+}
+.offer h3 {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.offer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.offer-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--light);
+  padding: 3rem 1rem;
+  border-radius: 8px;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.offer-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
 /* Galeria */
 .gallery h3 {
   text-align: center;

@@ -27,15 +27,17 @@ const images = [
 ];
 
 const grid = document.getElementById('gallery-grid');
-images.forEach(({ src, alt }) => {
-  const fig = document.createElement('figure');
-  fig.className = 'item';
-  const img = document.createElement('img');
-  img.src = src;
-  img.alt = alt;
-  fig.appendChild(img);
-  grid.appendChild(fig);
-});
+if (grid) {
+  images.forEach(({ src, alt }) => {
+    const fig = document.createElement('figure');
+    fig.className = 'item';
+    const img = document.createElement('img');
+    img.src = src;
+    img.alt = alt;
+    fig.appendChild(img);
+    grid.appendChild(fig);
+  });
+}
 
 // Animacja pojawiania się sekcji
 const observer = new IntersectionObserver((entries) => {
