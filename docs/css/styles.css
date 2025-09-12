@@ -85,7 +85,8 @@ body {
 }
 
 .submenu {
-  display: none;
+  max-height: 0;
+  overflow: hidden;  
   position: absolute;
   top: 100%;
   left: 0;
@@ -94,6 +95,8 @@ body {
   margin: 0;
   padding: 0.5rem 0;
   z-index: 1000;
+  transition: max-height 0.3s ease;
+
 }
 
 .submenu li {
@@ -108,7 +111,7 @@ body {
 
 .dropdown:hover .submenu,
 .dropdown.open .submenu {
-  display: block;
+  max-height: 300px; /* enough to show all menu items */
 }
 
 @media (max-width: 768px) {
