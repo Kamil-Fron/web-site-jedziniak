@@ -30,7 +30,6 @@ app.use(express.static(publicDir));
 app.get('/login', (req, res) => {
   res.sendFile(path.join(adminDir, 'login.html'));
 });
-app.use('/admin', ensureAuth, express.static(adminDir));
 
 const galleryFile = path.join(__dirname, 'gallery.json');
 const categoriesFile = path.join(__dirname, 'categories.json');
