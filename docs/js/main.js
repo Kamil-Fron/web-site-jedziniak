@@ -13,6 +13,7 @@ function renderPreview(sectionId, images, link) {
     container.appendChild(a);
   });
 }
+
 async function loadPreviews() {
   const sections = [
     { category: 'kuchnia', sectionId: 'kuchnia-preview', link: 'kuchnia.html' },
