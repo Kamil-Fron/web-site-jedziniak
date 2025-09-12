@@ -115,11 +115,11 @@ form.addEventListener('submit', e => {
     data.append('images', file);
   }
   fetch('/api/upload', { method: 'POST', body: data })
+    .then(() => fetch('/api/refresh-categories'))
     .then(() => {
       form.reset();
       loadGallery();
       refreshPreviews();
-
     });
 });
 
