@@ -27,6 +27,7 @@ function loadGallery() {
 form.addEventListener('submit', e => {
   e.preventDefault();
   const data = new FormData(form);
+  data.append('category', form.category.value);
   fetch('/api/upload', { method: 'POST', body: data })
     .then(() => {
       form.reset();

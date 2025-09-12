@@ -46,7 +46,11 @@ app.post('/api/login', (req, res) => {
 
 app.post('/api/upload', ensureAuth, upload.single('image'), (req, res) => {
   const images = JSON.parse(fs.readFileSync(galleryFile));
-  const img = { id: Date.now(), filename: req.file.filename };
+  const img = {
+    id: Date.now(),
+    filename: req.file.filename,
+    category: req.body.category
+  };
   images.push(img);
   fs.writeFileSync(galleryFile, JSON.stringify(images, null, 2));
   res.json(img);
