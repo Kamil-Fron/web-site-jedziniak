@@ -101,6 +101,7 @@ function renderGallery() {
     section.appendChild(heading);
 
     const container = document.createElement('div');
+    container.classList.add('scroll-gallery', 'admin-gallery');
     groups[cat].forEach(img => {
       const wrapper = document.createElement('div');
       const image = document.createElement('img');
