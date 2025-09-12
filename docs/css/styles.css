@@ -142,6 +142,18 @@ body {
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
+.scroll-gallery {
+  display: flex;
+  overflow-x: auto;
+  gap: 1rem;
+}
+
+.scroll-gallery img {
+  width: 250px;
+  height: 160px;
+  object-fit: cover;
+}
+
 /* Galeria */
 .gallery h3 {
   text-align: center;
