@@ -108,6 +108,7 @@ function renderGallery() {
       image.src = src;
       image.width = 150;
       const btn = document.createElement('button');
+      btn.type = 'button';
       btn.textContent = 'Usuń';
       btn.onclick = () => {
         fetch(`/api/gallery/${img.id}`, { method: 'DELETE', credentials: 'include' })
