@@ -1,8 +1,8 @@
-// Generowanie galerii obrazów dla kuchni
+// Generowanie galerii obrazów dla sypialni
 async function loadGallery() {
   const grid = document.getElementById('gallery-grid');
   try {
-    const res = await fetch('/api/gallery?category=kuchnia');
+    const res = await fetch('/api/gallery?category=sypialnia');
     const images = await res.json();
     images.forEach(({ src, alt }) => {
       const fig = document.createElement('figure');
