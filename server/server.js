@@ -3,6 +3,7 @@ const session = require('express-session');
 const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
+const bcrypt = require('bcryptjs');
 require('dotenv').config();
 
 const app = express();
@@ -33,7 +34,29 @@ app.get('/login', (req, res) => {
 
 const galleryFile = path.join(__dirname, 'gallery.json');
 const categoriesFile = path.join(__dirname, 'categories.json');
+const usersFile = path.join(__dirname, 'users.json');
 const upload = multer({ dest: path.join(publicDir, 'images') });
+
+function loadUsers() {
+  try {
+    return JSON.parse(fs.readFileSync(usersFile));
+  } catch (e) {
+    return [];
+  }
+}
+
+function saveUsers(users) {
+  fs.writeFileSync(usersFile, JSON.stringify(users, null, 2));
+}
+
+let users = loadUsers();
+if (users.length === 0) {
+  const username = process.env.ADMIN_USER || 'admin';
+  const password = process.env.ADMIN_PASSWORD || 'admin';
+  const hash = bcrypt.hashSync(password, 10);
+  users.push({ username, passwordHash: hash });
+  saveUsers(users);
+}
 
 // Rebuilds categories.json using the first four images from each category
 function refreshCategories() {
@@ -103,13 +126,27 @@ app.get('/api/refresh-categories', ensureAuth, (req, res) => {
 });
 
 app.post('/api/login', (req, res) => {
-  const password = process.env.ADMIN_PASSWORD || 'admin';
-  if (req.body.password === password) {
+  const { username, password } = req.body;
+  const user = users.find(u => u.username === username);
+  if (user && bcrypt.compareSync(password, user.passwordHash)) {
     req.session.loggedIn = true;
+    req.session.username = username;
     res.redirect('/admin/dashboard.html');
   } else {
-    res.status(401).send('Błędne hasło');
+    res.status(401).send('Błędny login lub hasło');
   }
+});
+
+app.post('/api/register', (req, res) => {
+  const { username, password } = req.body;
+  if (!username || !password) return res.status(400).send('Brak danych');
+  if (users.find(u => u.username === username)) {
+    return res.status(409).send('Użytkownik istnieje');
+  }
+  const hash = bcrypt.hashSync(password, 10);
+  users.push({ username, passwordHash: hash });
+  saveUsers(users);
+  res.status(201).send('Zarejestrowano');
 });
 
 app.get('/api/logout', (req, res) => {
