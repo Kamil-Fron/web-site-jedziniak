@@ -17,7 +17,12 @@ app.use(session({
 const publicDir = path.join(__dirname, '../docs');
 const adminDir = path.join(__dirname, '../docs/admin');
 app.use(express.static(publicDir));
-app.use('/admin', express.static(adminDir));
+
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(adminDir, 'login.html'));
+});
+
+app.use('/admin', ensureAuth, express.static(adminDir));
 
 const galleryFile = path.join(__dirname, 'gallery.json');
 const categoriesFile = path.join(__dirname, 'categories.json');
@@ -25,7 +30,7 @@ const upload = multer({ dest: path.join(publicDir, 'images') });
 
 function ensureAuth(req, res, next) {
   if (req.session && req.session.loggedIn) return next();
-  res.status(401).send('Nieautoryzowany');
+  res.redirect('/login');
 }
 
 app.get('/api/gallery', (req, res) => {
@@ -64,6 +69,13 @@ app.post('/api/login', (req, res) => {
   } else {
     res.status(401).send('Błędne hasło');
   }
+});
+
+app.get('/api/logout', (req, res) => {
+  req.session.destroy(err => {
+    if (err) return res.status(500).send('Błąd wylogowania');
+    res.redirect('/login');
+  });
 });
 
 app.post('/api/upload', ensureAuth, upload.array('images'), (req, res) => {
