@@ -1,33 +1,4 @@
-const kuchniaPreview = [
-  { src: 'https://picsum.photos/id/10/250/160', alt: 'Nowoczesna kuchnia z drewnem' },
-  { src: 'https://picsum.photos/id/11/250/160', alt: 'Szafki kuchenne' },
-  { src: 'https://picsum.photos/id/12/250/160', alt: 'Wyspa kuchenna' },
-  { src: 'https://picsum.photos/id/13/250/160', alt: 'Blat z naturalnego drewna' }
-];
-const salonPreview = [
-  { src: 'https://picsum.photos/id/20/250/160', alt: 'Stylowy salon' },
-  { src: 'https://picsum.photos/id/21/250/160', alt: 'Kanapa w salonie' },
-  { src: 'https://picsum.photos/id/22/250/160', alt: 'Stolik kawowy' },
-  { src: 'https://picsum.photos/id/23/250/160', alt: 'Półka na książki' }
-];
-const sypialniaPreview = [
-  { src: 'https://picsum.photos/id/50/250/160', alt: 'Przytulna sypialnia' },
-  { src: 'https://picsum.photos/id/51/250/160', alt: 'Łóżko drewniane w sypialni' },
-  { src: 'https://picsum.photos/id/52/250/160', alt: 'Szafa w sypialni' },
-  { src: 'https://picsum.photos/id/53/250/160', alt: 'Stolik nocny' }
-];
-const lazienkaPreview = [
-  { src: 'https://picsum.photos/id/30/250/160', alt: 'Minimalistyczna łazienka' },
-  { src: 'https://picsum.photos/id/31/250/160', alt: 'Umywalka z szafką' },
-  { src: 'https://picsum.photos/id/32/250/160', alt: 'Wanna wolnostojąca' },
-  { src: 'https://picsum.photos/id/33/250/160', alt: 'Szafka na ręczniki' }
-];
-const innePreview = [
-  { src: 'https://picsum.photos/id/40/250/160', alt: 'Szafa na zamówienie' },
-  { src: 'https://picsum.photos/id/41/250/160', alt: 'Biurko z drewna' },
-  { src: 'https://picsum.photos/id/42/250/160', alt: 'Łóżko drewniane' },
-  { src: 'https://picsum.photos/id/43/250/160', alt: 'Regał na książki' }
-];
+// Podglądy sekcji będą pobierane dynamicznie z API
 
 function renderPreview(sectionId, images, link) {
   const container = document.getElementById(sectionId);
@@ -42,12 +13,27 @@ function renderPreview(sectionId, images, link) {
     container.appendChild(a);
   });
 }
+async function loadPreviews() {
+  const sections = [
+    { category: 'kuchnia', sectionId: 'kuchnia-preview', link: 'kuchnia.html' },
+    { category: 'salon', sectionId: 'salon-preview', link: 'salon.html' },
+    { category: 'lazienka', sectionId: 'lazienka-preview', link: 'lazienka.html' },
+    { category: 'sypialnia', sectionId: 'sypialnia-preview', link: 'sypialnia.html' },
+    { category: 'inne', sectionId: 'inne-preview', link: 'inne.html' }
+  ];
 
-renderPreview('kuchnia-preview', kuchniaPreview, 'kuchnia.html');
-renderPreview('salon-preview', salonPreview, 'salon.html');
-renderPreview('sypialnia-preview', sypialniaPreview, 'sypialnia.html');
-renderPreview('lazienka-preview', lazienkaPreview, 'lazienka.html');
-renderPreview('inne-preview', innePreview, 'inne.html');
+  for (const { category, sectionId, link } of sections) {
+    try {
+      const res = await fetch(`/api/gallery?category=${category}`);
+      const images = await res.json();
+      renderPreview(sectionId, images, link);
+    } catch (err) {
+      console.error('Błąd pobierania galerii', err);
+    }
+  }
+}
+
+loadPreviews();
 
 // Animacja pojawiania się sekcji
 const observer = new IntersectionObserver((entries) => {
@@ -70,4 +56,3 @@ form.addEventListener('submit', (e) => {
 });
 
 document.getElementById('year').textContent = new Date().getFullYear();
-
