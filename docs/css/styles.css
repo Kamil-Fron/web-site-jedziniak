@@ -252,23 +252,27 @@ body {
   transform: scale(1.1);
 }
 
-#gallery-grid {
+#gallery-grid,
+#gallery-all {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1rem;
 }
-#gallery-grid .item {
+#gallery-grid .item,
+#gallery-all .item {
   position: relative;
   overflow: hidden;
 }
-#gallery-grid img {
+#gallery-grid img,
+#gallery-all img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.5s ease;
   display: block;
 }
-#gallery-grid .item:hover img {
+#gallery-grid .item:hover img,
+#gallery-all .item:hover img {
   transform: scale(1.1);
 }
 
