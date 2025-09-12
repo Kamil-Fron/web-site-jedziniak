@@ -59,16 +59,19 @@ app.post('/api/login', (req, res) => {
   }
 });
 
-app.post('/api/upload', ensureAuth, upload.single('image'), (req, res) => {
+app.post('/api/upload', ensureAuth, upload.array('images'), (req, res) => {
   const images = JSON.parse(fs.readFileSync(galleryFile));
-  const img = {
-    id: Date.now(),
-    filename: req.file.filename,
-    category: req.body.category
-  };
-  images.push(img);
+  const uploaded = req.files.map((file, idx) => {
+    const img = {
+      id: Date.now() + idx,
+      filename: file.filename,
+      category: req.body.category
+    };
+    images.push(img);
+    return img;
+  });
   fs.writeFileSync(galleryFile, JSON.stringify(images, null, 2));
-  res.json(img);
+  res.json(uploaded);
 });
 
 app.delete('/api/gallery/:id', ensureAuth, (req, res) => {
