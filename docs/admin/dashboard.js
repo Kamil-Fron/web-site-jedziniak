@@ -133,11 +133,12 @@ form.addEventListener('submit', e => {
   for (const file of formData.getAll('images')) {
     data.append('images', file);
   }
-  fetch('/api/upload', { method: 'POST', body: data })
+  fetch('/api/upload', { method: 'POST', body: data, credentials: 'include' })
     .then(() => fetch('/api/refresh-categories'))
     .then(() => {
       form.reset();
       preview.innerHTML = '';
+      fileInput.value = '';
       loadGallery();
       refreshPreviews();
     });
