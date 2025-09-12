@@ -3,7 +3,7 @@
 function renderPreview(sectionId, images, link) {
   const container = document.getElementById(sectionId);
   if (!container) return;
-  images.slice(0, 4).forEach(image => {
+  images.slice(0, 3).forEach(image => {
     const a = document.createElement('a');
     a.href = link;
     const img = document.createElement('img');
