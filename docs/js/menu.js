@@ -5,6 +5,7 @@ if (typeof document !== 'undefined') {
 
   if (toggle && nav) {
     toggle.addEventListener('click', () => {
+      // Show or hide the navigation by toggling the `.open` class
       nav.classList.toggle('open');
     });
   }
