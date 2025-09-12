@@ -75,6 +75,10 @@ body {
   font-size: 2rem;
   cursor: pointer;
 }
+.menu-toggle::before {
+  content: "☰";
+}
+
 
 /* Dropdown */
 .dropdown {
