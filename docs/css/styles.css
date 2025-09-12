@@ -67,6 +67,15 @@ body {
   text-decoration: none;
 }
 
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--light);
+  font-size: 2rem;
+  cursor: pointer;
+}
+
 /* Dropdown */
 .dropdown {
   position: relative;
@@ -102,6 +111,16 @@ body {
 @media (max-width: 768px) {
   .submenu {
     position: static;
+  }
+  .nav > ul {
+    display: none;
+  }
+  .menu-toggle {
+    display: block;
+  }
+  .nav.open > ul {
+    display: flex;
+    flex-direction: column;
   }
 }
 
