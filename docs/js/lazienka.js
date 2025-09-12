@@ -1,21 +1,24 @@
 // Generowanie galerii obrazów dla łazienki
-const images = [
-  { src: 'https://picsum.photos/id/30/800/600', alt: 'Minimalistyczna łazienka' },
-  { src: 'https://picsum.photos/id/31/800/600', alt: 'Umywalka z szafką' },
-  { src: 'https://picsum.photos/id/32/800/600', alt: 'Wanna wolnostojąca' },
-  { src: 'https://picsum.photos/id/33/800/600', alt: 'Szafka na ręczniki' }
-];
+async function loadGallery() {
+  const grid = document.getElementById('gallery-grid');
+  try {
+    const res = await fetch('/api/gallery?category=lazienka');
+    const images = await res.json();
+    images.forEach(({ src, alt }) => {
+      const fig = document.createElement('figure');
+      fig.className = 'item';
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = alt;
+      fig.appendChild(img);
+      grid.appendChild(fig);
+    });
+  } catch (err) {
+    console.error('Błąd pobierania galerii', err);
+  }
+}
 
-const grid = document.getElementById('gallery-grid');
-images.forEach(({ src, alt }) => {
-  const fig = document.createElement('figure');
-  fig.className = 'item';
-  const img = document.createElement('img');
-  img.src = src;
-  img.alt = alt;
-  fig.appendChild(img);
-  grid.appendChild(fig);
-});
+loadGallery();
 
 // Animacja pojawiania się sekcji
 const observer = new IntersectionObserver((entries) => {

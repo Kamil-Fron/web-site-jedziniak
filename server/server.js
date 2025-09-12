@@ -30,7 +30,14 @@ function ensureAuth(req, res, next) {
 app.get('/api/gallery', (req, res) => {
   fs.readFile(galleryFile, (err, data) => {
     if (err) return res.status(500).send('Błąd odczytu');
-    res.json(JSON.parse(data));
+    let images = JSON.parse(data);
+
+    const { category } = req.query;
+    if (category) {
+      images = images.filter(img => img.category === category);
+    }
+
+    res.json(images);
   });
 });
 

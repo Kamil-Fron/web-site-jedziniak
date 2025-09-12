@@ -1,21 +1,24 @@
 // Generowanie galerii obrazów dla innych mebli
-const images = [
-  { src: 'https://picsum.photos/id/40/800/600', alt: 'Szafa na zamówienie' },
-  { src: 'https://picsum.photos/id/41/800/600', alt: 'Biurko z drewna' },
-  { src: 'https://picsum.photos/id/42/800/600', alt: 'Łóżko drewniane' },
-  { src: 'https://picsum.photos/id/43/800/600', alt: 'Regał na książki' }
-];
+async function loadGallery() {
+  const grid = document.getElementById('gallery-grid');
+  try {
+    const res = await fetch('/api/gallery?category=inne');
+    const images = await res.json();
+    images.forEach(({ src, alt }) => {
+      const fig = document.createElement('figure');
+      fig.className = 'item';
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = alt;
+      fig.appendChild(img);
+      grid.appendChild(fig);
+    });
+  } catch (err) {
+    console.error('Błąd pobierania galerii', err);
+  }
+}
 
-const grid = document.getElementById('gallery-grid');
-images.forEach(({ src, alt }) => {
-  const fig = document.createElement('figure');
-  fig.className = 'item';
-  const img = document.createElement('img');
-  img.src = src;
-  img.alt = alt;
-  fig.appendChild(img);
-  grid.appendChild(fig);
-});
+loadGallery();
 
 // Animacja pojawiania się sekcji
 const observer = new IntersectionObserver((entries) => {

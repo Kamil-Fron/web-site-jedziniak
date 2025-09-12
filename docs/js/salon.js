@@ -1,21 +1,24 @@
 // Generowanie galerii obrazów dla salonu
-const images = [
-  { src: 'https://picsum.photos/id/20/800/600', alt: 'Stylowy salon' },
-  { src: 'https://picsum.photos/id/21/800/600', alt: 'Kanapa w salonie' },
-  { src: 'https://picsum.photos/id/22/800/600', alt: 'Stolik kawowy' },
-  { src: 'https://picsum.photos/id/23/800/600', alt: 'Półka na książki' }
-];
+async function loadGallery() {
+  const grid = document.getElementById('gallery-grid');
+  try {
+    const res = await fetch('/api/gallery?category=salon');
+    const images = await res.json();
+    images.forEach(({ src, alt }) => {
+      const fig = document.createElement('figure');
+      fig.className = 'item';
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = alt;
+      fig.appendChild(img);
+      grid.appendChild(fig);
+    });
+  } catch (err) {
+    console.error('Błąd pobierania galerii', err);
+  }
+}
 
-const grid = document.getElementById('gallery-grid');
-images.forEach(({ src, alt }) => {
-  const fig = document.createElement('figure');
-  fig.className = 'item';
-  const img = document.createElement('img');
-  img.src = src;
-  img.alt = alt;
-  fig.appendChild(img);
-  grid.appendChild(fig);
-});
+loadGallery();
 
 // Animacja pojawiania się sekcji
 const observer = new IntersectionObserver((entries) => {
