@@ -314,3 +314,14 @@ body {
     font-size: 2rem;
   }
 }
+
+#preview {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+#preview img {
+  width: 100px;
+  height: auto;
+}

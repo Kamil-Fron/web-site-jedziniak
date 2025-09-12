@@ -1,5 +1,7 @@
 const list = document.getElementById('gallery-list');
 const form = document.getElementById('upload-form');
+const fileInput = form.querySelector('input[type="file"]');
+const preview = document.getElementById('preview');
 
 // Dynamiczny filtr kategorii
 const filter = document.createElement('select');
@@ -12,6 +14,20 @@ list.parentNode.insertBefore(filter, list);
 let galleryData = [];
 
 filter.addEventListener('change', renderGallery);
+
+fileInput.addEventListener('change', () => {
+  preview.innerHTML = '';
+  for (const file of fileInput.files) {
+    const reader = new FileReader();
+    reader.onload = e => {
+      const img = document.createElement('img');
+      img.src = e.target.result;
+      img.width = 100;
+      preview.appendChild(img);
+    };
+    reader.readAsDataURL(file);
+  }
+});
 
 
 // Kopia funkcji renderPreview z głównego skryptu, aby można było
@@ -117,6 +133,7 @@ form.addEventListener('submit', e => {
   fetch('/api/upload', { method: 'POST', body: data })
     .then(() => {
       form.reset();
+      preview.innerHTML = '';
       loadGallery();
       refreshPreviews();
 
