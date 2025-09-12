@@ -10,6 +10,12 @@ const salonPreview = [
   { src: 'https://picsum.photos/id/22/250/160', alt: 'Stolik kawowy' },
   { src: 'https://picsum.photos/id/23/250/160', alt: 'Półka na książki' }
 ];
+const sypialniaPreview = [
+  { src: 'https://picsum.photos/id/50/250/160', alt: 'Przytulna sypialnia' },
+  { src: 'https://picsum.photos/id/51/250/160', alt: 'Łóżko drewniane w sypialni' },
+  { src: 'https://picsum.photos/id/52/250/160', alt: 'Szafa w sypialni' },
+  { src: 'https://picsum.photos/id/53/250/160', alt: 'Stolik nocny' }
+];
 const lazienkaPreview = [
   { src: 'https://picsum.photos/id/30/250/160', alt: 'Minimalistyczna łazienka' },
   { src: 'https://picsum.photos/id/31/250/160', alt: 'Umywalka z szafką' },
@@ -39,6 +45,7 @@ function renderPreview(sectionId, images, link) {
 
 renderPreview('kuchnia-preview', kuchniaPreview, 'kuchnia.html');
 renderPreview('salon-preview', salonPreview, 'salon.html');
+renderPreview('sypialnia-preview', sypialniaPreview, 'sypialnia.html');
 renderPreview('lazienka-preview', lazienkaPreview, 'lazienka.html');
 renderPreview('inne-preview', innePreview, 'inne.html');
 
