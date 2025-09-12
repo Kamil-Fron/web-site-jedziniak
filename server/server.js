@@ -20,6 +20,7 @@ app.use(express.static(publicDir));
 app.use('/admin', express.static(adminDir));
 
 const galleryFile = path.join(__dirname, 'gallery.json');
+const categoriesFile = path.join(__dirname, 'categories.json');
 const upload = multer({ dest: path.join(publicDir, 'images') });
 
 function ensureAuth(req, res, next) {
@@ -38,6 +39,13 @@ app.get('/api/gallery', (req, res) => {
     }
 
     res.json(images);
+  });
+});
+
+app.get('/api/categories', (req, res) => {
+  fs.readFile(categoriesFile, (err, data) => {
+    if (err) return res.status(500).send('Błąd odczytu');
+    res.json(JSON.parse(data));
   });
 });
 

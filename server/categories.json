@@ -1,0 +1,26 @@
+{
+  "kuchnia": [
+    { "src": "https://picsum.photos/id/10/250/160", "alt": "Nowoczesna kuchnia z drewnem" },
+    { "src": "https://picsum.photos/id/11/250/160", "alt": "Szafki kuchenne" },
+    { "src": "https://picsum.photos/id/12/250/160", "alt": "Wyspa kuchenna" },
+    { "src": "https://picsum.photos/id/13/250/160", "alt": "Blat z naturalnego drewna" }
+  ],
+  "salon": [
+    { "src": "https://picsum.photos/id/20/250/160", "alt": "Stylowy salon" },
+    { "src": "https://picsum.photos/id/21/250/160", "alt": "Kanapa w salonie" },
+    { "src": "https://picsum.photos/id/22/250/160", "alt": "Stolik kawowy" },
+    { "src": "https://picsum.photos/id/23/250/160", "alt": "Półka na książki" }
+  ],
+  "lazienka": [
+    { "src": "https://picsum.photos/id/30/250/160", "alt": "Minimalistyczna łazienka" },
+    { "src": "https://picsum.photos/id/31/250/160", "alt": "Umywalka z szafką" },
+    { "src": "https://picsum.photos/id/32/250/160", "alt": "Wanna wolnostojąca" },
+    { "src": "https://picsum.photos/id/33/250/160", "alt": "Szafka na ręczniki" }
+  ],
+  "inne": [
+    { "src": "https://picsum.photos/id/40/250/160", "alt": "Szafa na zamówienie" },
+    { "src": "https://picsum.photos/id/41/250/160", "alt": "Biurko z drewna" },
+    { "src": "https://picsum.photos/id/42/250/160", "alt": "Łóżko drewniane" },
+    { "src": "https://picsum.photos/id/43/250/160", "alt": "Regał na książki" }
+  ]
+}

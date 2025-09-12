@@ -13,6 +13,38 @@ let galleryData = [];
 
 filter.addEventListener('change', renderGallery);
 
+
+// Kopia funkcji renderPreview z głównego skryptu, aby można było
+// odświeżać miniatury na stronie po stronie klienta.
+function renderPreview(sectionId, images, link) {
+  const container = document.getElementById(sectionId);
+  if (!container) return;
+  container.innerHTML = '';
+  images.forEach(({ src, alt }) => {
+    const a = document.createElement('a');
+    a.href = link;
+    const img = document.createElement('img');
+    img.src = src;
+    img.alt = alt;
+    a.appendChild(img);
+    container.appendChild(a);
+  });
+}
+
+// Pobiera dane miniatur dla wszystkich kategorii i aktualizuje sekcje
+// na stronie. Funkcja może być uruchamiana po dodaniu obrazu lub
+// periodycznie w celu odświeżania widoku.
+function refreshPreviews() {
+  fetch('/api/categories')
+    .then(res => res.json())
+    .then(data => {
+      renderPreview('kuchnia-preview', data.kuchnia || [], 'kuchnia.html');
+      renderPreview('salon-preview', data.salon || [], 'salon.html');
+      renderPreview('lazienka-preview', data.lazienka || [], 'lazienka.html');
+      renderPreview('inne-preview', data.inne || [], 'inne.html');
+    });
+}
+
 function loadGallery() {
   fetch('/api/gallery')
     .then(res => res.json())
@@ -81,7 +113,14 @@ form.addEventListener('submit', e => {
     .then(() => {
       form.reset();
       loadGallery();
+      refreshPreviews();
+
     });
 });
 
 loadGallery();
+refreshPreviews();
+
+// Okresowe odświeżanie miniatur, aby nowe zdjęcia pojawiały się
+// bez konieczności przeładowywania strony głównej.
+setInterval(refreshPreviews, 10000);
