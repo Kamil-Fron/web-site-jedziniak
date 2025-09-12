@@ -77,11 +77,12 @@ function refreshCategories() {
 }
 
 function ensureAuth(req, res, next) {
+  console.log(req.session);
   if (req.session && req.session.loggedIn) return next();
   res.redirect('/login');
 }
 
-app.get('/api/gallery', (req, res) => {
+app.get('/api/gallery', ensureAuth, (req, res) => {
   fs.readFile(galleryFile, (err, data) => {
     if (err) return res.status(500).send('Błąd odczytu');
     let images = JSON.parse(data);

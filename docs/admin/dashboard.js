@@ -118,9 +118,11 @@ function renderGallery() {
           if (res.ok) {
             loadGallery();
           } else {
-            alert('Nie udało się usunąć zdjęcia.');
+            console.error('Delete failed with status', res.status);
+            alert('Nie udało się usunąć zdjęcia. Status: ' + res.status);
           }
         } catch (err) {
+          console.error(err);
           alert('Wystąpił błąd podczas usuwania zdjęcia.');
         } finally {
           btn.disabled = false;
@@ -149,10 +151,12 @@ form.addEventListener('submit', async e => {
     }
     const uploadRes = await fetch('/api/upload', { method: 'POST', body: data, credentials: 'include' });
     if (!uploadRes.ok) {
+      console.error('Upload failed with status', uploadRes.status);
       throw new Error('Upload failed');
     }
     const refreshRes = await fetch('/api/refresh-categories');
     if (!refreshRes.ok) {
+      console.error('Refresh failed with status', refreshRes.status);
       throw new Error('Refresh failed');
     }
     form.reset();
@@ -161,6 +165,7 @@ form.addEventListener('submit', async e => {
     loadGallery();
     refreshPreviews();
   } catch (err) {
+    console.error(err);
     alert('Wystąpił błąd podczas przesyłania plików.');
   } finally {
     submitBtn.disabled = false;
