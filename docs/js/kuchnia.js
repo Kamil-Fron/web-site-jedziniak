@@ -4,12 +4,12 @@ async function loadGallery() {
   try {
     const res = await fetch('/api/gallery?category=kuchnia');
     const images = await res.json();
-    images.forEach(({ src, alt }) => {
+    images.forEach(image => {
       const fig = document.createElement('figure');
       fig.className = 'item';
       const img = document.createElement('img');
-      img.src = src;
-      img.alt = alt;
+      img.src = image.src;
+      img.alt = image.alt || '';
       fig.appendChild(img);
       grid.appendChild(fig);
     });
