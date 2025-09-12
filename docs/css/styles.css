@@ -323,3 +323,28 @@ body {
   width: 100px;
   height: auto;
 }
+
+/* Login */
+.login-main {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-main form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.login-main form label {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.login-main form button {
+  margin-top: 1rem;
+}

@@ -7,12 +7,47 @@
   <link rel="stylesheet" href="../css/styles.css" />
 </head>
 <body>
-  <form id="login-form" action="/api/login" method="POST">
-    <input type="text" name="username" placeholder="Login" required />
-    <input type="password" name="password" placeholder="Hasło" required />
-    <button type="submit">Zaloguj</button>
-  </form>
+  <header>
+    <nav class="nav">
+      <h1 class="logo"><a href="../index.html"><img src="../images/logo.png" alt="Vikimeble logo" /></a></h1>
+      <ul>
+        <li><a href="../index.html#gallery">Galeria</a></li>
+        <li class="dropdown">
+          <a href="#">Oferta</a>
+          <ul class="submenu">
+            <li><a href="../kuchnia.html">Kuchnia</a></li>
+            <li><a href="../salon.html">Salon</a></li>
+            <li><a href="../sypialnia.html">Sypialnia</a></li>
+            <li><a href="../lazienka.html">Łazienka</a></li>
+            <li><a href="../inne.html">Inne</a></li>
+          </ul>
+        </li>
+        <li><a href="../index.html#contact">Kontakt</a></li>
+        <li><a href="../index.html#about">O nas</a></li>
+        <li><a href="tel:787138178" class="phone">787 138 178</a></li>
+      </ul>
+    </nav>
+  </header>
 
+  <main class="login-main">
+    <form id="login-form" action="/api/login" method="POST">
+      <label>Login
+        <input type="text" name="username" placeholder="Login" required />
+      </label>
+      <label>Hasło
+        <input type="password" name="password" placeholder="Hasło" required />
+      </label>
+      <button type="submit">Zaloguj</button>
+    </form>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; <span id="year"></span> Vikimeble</p>
+    <a href="/login">Panel administracyjny</a>
+  </footer>
+
+  <script src="../js/menu.js"></script>
+  <script src="../js/main.js"></script>
   <script>
     document
       .getElementById('login-form')
@@ -33,3 +68,4 @@
   </script>
 </body>
 </html>
+
