@@ -82,12 +82,16 @@ function ensureAuth(req, res, next) {
   res.redirect('/login');
 }
 
-app.get('/api/gallery', ensureAuth, (req, res) => {
+app.get('/api/gallery', (req, res) => {
+  const { mode } = req.query;
+  if (mode === 'full' && !(req.session && req.session.loggedIn)) {
+    return res.redirect('/login');
+  }
   fs.readFile(galleryFile, (err, data) => {
     if (err) return res.status(500).send('Błąd odczytu');
     let images = JSON.parse(data);
 
-    const { category, mode } = req.query;
+    const { category } = req.query;
     if (category) {
       images = images.filter(img => img.category === category);
     }
