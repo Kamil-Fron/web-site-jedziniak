@@ -35,6 +35,24 @@ const galleryFile = path.join(__dirname, 'gallery.json');
 const categoriesFile = path.join(__dirname, 'categories.json');
 const upload = multer({ dest: path.join(publicDir, 'images') });
 
+// Rebuilds categories.json using the first four images from each category
+function refreshCategories() {
+  const images = JSON.parse(fs.readFileSync(galleryFile));
+  const categories = images.reduce((acc, img) => {
+    const cat = img.category || 'inne';
+    (acc[cat] = acc[cat] || []).push({
+      src: '/images/' + img.filename,
+      alt: img.alt || img.category || cat
+    });
+    return acc;
+  }, {});
+  Object.keys(categories).forEach(cat => {
+    categories[cat] = categories[cat].slice(0, 4);
+  });
+  fs.writeFileSync(categoriesFile, JSON.stringify(categories, null, 2));
+  return categories;
+}
+
 function ensureAuth(req, res, next) {
   if (req.session && req.session.loggedIn) return next();
   res.redirect('/login');
@@ -79,6 +97,11 @@ app.get('/api/categories', (req, res) => {
   });
 });
 
+app.get('/api/refresh-categories', ensureAuth, (req, res) => {
+  const categories = refreshCategories();
+  res.json(categories);
+});
+
 app.post('/api/login', (req, res) => {
   const password = process.env.ADMIN_PASSWORD || 'admin';
   if (req.body.password === password) {
@@ -108,6 +131,7 @@ app.post('/api/upload', ensureAuth, upload.array('images'), (req, res) => {
     return img;
   });
   fs.writeFileSync(galleryFile, JSON.stringify(images, null, 2));
+  refreshCategories();
   res.json(uploaded);
 });
 
