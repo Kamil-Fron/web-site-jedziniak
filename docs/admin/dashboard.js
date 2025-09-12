@@ -46,10 +46,10 @@ function refreshPreviews() {
 }
 
 function loadGallery() {
-  fetch('/api/gallery')
+  fetch('/api/gallery?mode=full')
     .then(res => res.json())
     .then(images => {
-galleryData = images;
+      galleryData = images;
       updateFilterOptions();
       renderGallery();
     });
@@ -88,7 +88,8 @@ function renderGallery() {
     groups[cat].forEach(img => {
       const wrapper = document.createElement('div');
       const image = document.createElement('img');
-      image.src = `../images/${img.filename}`;
+      const src = img.src || `../images/${img.filename}`;
+      image.src = src;
       image.width = 150;
       const btn = document.createElement('button');
       btn.textContent = 'Usuń';

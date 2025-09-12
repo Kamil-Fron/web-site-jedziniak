@@ -46,9 +46,20 @@ app.get('/api/gallery', (req, res) => {
     if (err) return res.status(500).send('Błąd odczytu');
     let images = JSON.parse(data);
 
-    const { category } = req.query;
+    const { category, mode } = req.query;
     if (category) {
       images = images.filter(img => img.category === category);
+    }
+
+    // Return original objects when mode=full, otherwise map to public fields
+    if (mode === 'full') {
+      const full = images.map(img => ({
+        id: img.id,
+        filename: img.filename,
+        category: img.category,
+        alt: img.alt || img.category
+      }));
+      return res.json(full);
     }
 
     const mapped = images.map(img => {
