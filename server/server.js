@@ -16,12 +16,20 @@ app.use(session({
 
 const publicDir = path.join(__dirname, '../docs');
 const adminDir = path.join(__dirname, '../docs/admin');
-app.use(express.static(publicDir));
 
-app.get('/login', (req, res) => {
+// Unprotected login page route
+app.get('/admin/login.html', (req, res) => {
   res.sendFile(path.join(adminDir, 'login.html'));
 });
 
+// Protect admin assets
+app.use('/admin', ensureAuth, express.static(adminDir));
+
+// Serve public assets
+app.use(express.static(publicDir));
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(adminDir, 'login.html'));
+});
 app.use('/admin', ensureAuth, express.static(adminDir));
 
 const galleryFile = path.join(__dirname, 'gallery.json');
