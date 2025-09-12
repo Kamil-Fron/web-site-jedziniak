@@ -110,8 +110,10 @@ function renderGallery() {
       const btn = document.createElement('button');
       btn.textContent = 'Usuń';
       btn.onclick = () => {
-        fetch(`/api/gallery/${img.id}`, { method: 'DELETE' })
-          .then(loadGallery);
+        fetch(`/api/gallery/${img.id}`, { method: 'DELETE', credentials: 'include' })
+          .then(res => {
+            if (res.ok) loadGallery();
+          });
       };
       wrapper.appendChild(image);
       wrapper.appendChild(btn);
