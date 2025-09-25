@@ -358,8 +358,10 @@ body {
 }
 
 .hero--galeria {
-  background-image: url('https://images.unsplash.com/photo-1616628182501-0b6952dfa52d?auto=format&fit=crop&w=1600&q=80');
+  background-image: url('https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1600&q=80');
   background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .hero-content--gallery {
