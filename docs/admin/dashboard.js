@@ -143,7 +143,7 @@ function renderGallery() {
           const res = await fetchOrRedirect(`/api/gallery/${img.id}`, { method: 'DELETE' });
           if (!res) return;
           if (res.ok) {
-            loadGallery();
+            await loadGallery();
           } else {
             console.error('Delete failed with status', res.status);
             alert('Nie udało się usunąć zdjęcia. Status: ' + res.status);
@@ -191,8 +191,8 @@ form.addEventListener('submit', async e => {
     form.reset();
     preview.innerHTML = '';
     fileInput.value = '';
-    loadGallery();
-    refreshPreviews();
+    await loadGallery();
+    await refreshPreviews();
   } catch (err) {
     console.error(err);
     alert('Wystąpił błąd podczas przesyłania plików.');
@@ -207,3 +207,8 @@ refreshPreviews();
 // Okresowe odświeżanie miniatur, aby nowe zdjęcia pojawiały się
 // bez konieczności przeładowywania strony głównej.
 setInterval(refreshPreviews, 10000);
+
+// Utrzymuj ważność sesji, wykonując okresowe pingowanie serwera.
+setInterval(() => {
+  fetchOrRedirect('/api/session/keep-alive', { silent: true, cache: 'no-store' });
+}, 2 * 60 * 1000);
