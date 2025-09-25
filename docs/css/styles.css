@@ -1222,7 +1222,6 @@ body.lightbox-open {
   font-size: 0.85rem;
   color: #6b6b6b;
 }
-
 .admin-nav__actions {
   display: flex;
   align-items: center;
@@ -1320,7 +1319,6 @@ body.lightbox-open {
   color: #6b6b6b;
   font-size: 0.95rem;
 }
-
 .admin-form {
   display: flex;
   flex-direction: column;
@@ -1448,7 +1446,6 @@ body.lightbox-open {
   background: rgba(0, 0, 0, 0.25);
   border-radius: 999px;
 }
-
 .admin-gallery__item {
   display: flex;
   flex-direction: column;
