@@ -163,6 +163,46 @@ body {
   pointer-events: auto;
 }
 
+.nav--solid {
+  background: var(--light);
+  color: var(--text);
+  box-shadow: 0 8px 28px rgba(15, 15, 15, 0.08);
+}
+
+.nav--solid > ul > li > a {
+  color: var(--text);
+  background: transparent;
+}
+
+.nav--solid > ul > li > a:hover,
+.nav--solid > ul > li > a:focus-visible {
+  background: rgba(15, 15, 15, 0.08);
+  color: var(--text);
+}
+
+.nav--solid .phone {
+  color: var(--accent);
+}
+
+.nav--solid .menu-toggle {
+  color: var(--text);
+}
+
+.nav--solid .submenu {
+  background: var(--light);
+  border: 1px solid rgba(15, 15, 15, 0.08);
+  box-shadow: 0 25px 55px rgba(15, 15, 15, 0.12);
+}
+
+.nav--solid .submenu a {
+  color: var(--text);
+}
+
+.nav--solid .submenu a:hover,
+.nav--solid .submenu a:focus-visible {
+  background: rgba(15, 15, 15, 0.06);
+}
+
 @media (max-width: 768px) {
   .submenu {
     position: static;
