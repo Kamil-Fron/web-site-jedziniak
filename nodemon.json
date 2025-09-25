@@ -1,0 +1,10 @@
+{
+  "watch": ["server"],
+  "ext": "js,json",
+  "ignore": [
+    "docs/images",
+    "server/gallery.json",
+    "server/categories.json"
+  ],
+  "exec": "node server/server.js"
+}
