@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="./css/styles.css" />
 </head>
 <body>
-  <header class="hero">
+  <header class="hero hero--subpage hero--inne">
     <nav class="nav">
       <h1 class="logo"><a href="index.html"><img src="./images/logo.png" alt="Vikimeble logo" /></a></h1>
       <button class="menu-toggle" aria-label="Menu"></button>
@@ -30,14 +30,34 @@
       </ul>
     </nav>
     <div class="hero-content">
-      <h2>Inne</h2>
+      <p class="hero-eyebrow">Projekty specjalne Vikimeble</p>
+      <h2>Nietypowe meble na wymiar</h2>
+      <p>Realizujemy zabudowy, które wymykają się standardom – od garderób i biur domowych po meble komercyjne. Łączymy kreatywne podejście z precyzyjnym rzemiosłem.</p>
+      <a href="#gallery-grid" class="btn cta">Zainspiruj się</a>
     </div>
   </header>
-  <div id="gallery-grid" class="gallery grid"></div>
+
   <main>
-    <section class="section">
+    <section class="gallery section reveal">
       <div class="container">
-        <p>Treść w przygotowaniu.</p>
+        <h2>Galeria projektów specjalnych</h2>
+        <p class="section-lead">Zapoznaj się z realizacjami, które odpowiadają na nietypowe potrzeby inwestorów – od zabudów pod skosem po unikatowe elementy wyposażenia.</p>
+        <div id="gallery-grid" class="grid"></div>
+      </div>
+    </section>
+
+    <section class="category-description section reveal">
+      <div class="container">
+        <h2>Meble dopracowane pod każdy scenariusz</h2>
+        <p>Niestandardowe projekty to nasza specjalność. Tworzymy meble do przestrzeni komercyjnych, biur domowych, garderób oraz wnętrz ze skosami, w których liczy się milimetrowa precyzja i wysoka estetyka.</p>
+        <p>Dzięki zapleczu technologicznemu jesteśmy w stanie realizować projekty o nietypowych kształtach oraz w szerokiej palecie materiałów – od naturalnego drewna, przez laminaty, po spiek kwarcowy i metalowe akcenty.</p>
+        <h3>Co możemy dla Ciebie zaprojektować?</h3>
+        <ul class="category-highlights">
+          <li><strong>Garderoby i zabudowy poddasza.</strong> Maksymalnie wykorzystujemy skosy i wnęki, tworząc przestrzeń do przechowywania dopasowaną do Twoich potrzeb.</li>
+          <li><strong>Meble do biura i przestrzeni pracy.</strong> Projektujemy ergonomiczne biurka, regały i zabudowy, które wspierają produktywność.</li>
+          <li><strong>Elementy dekoracyjne.</strong> Wykonujemy zabudowy ścienne, lamele i meble ekspozycyjne, które nadają wnętrzu indywidualny charakter.</li>
+        </ul>
+        <p>Podziel się z nami swoim pomysłem, a przygotujemy rozwiązanie, które połączy funkcjonalność z designem.</p>
       </div>
     </section>
   </main>
@@ -46,6 +66,7 @@
     <a href="/login">Panel administracyjny</a>
   </footer>
   <script src="./js/menu.js"></script>
+  <script src="./js/gallery-lightbox.js"></script>
   <script src="./js/inne.js"></script>
 </body>
 </html>

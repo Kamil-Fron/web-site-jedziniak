@@ -31,6 +31,16 @@ async function loadGallery() {
       });
 
       container.appendChild(grid);
+
+      const lightboxItems = imgs.map(img => {
+        const alt = img.alt || '';
+        return {
+          src: '/images/' + img.filename,
+          alt,
+          caption: alt
+        };
+      });
+      registerGalleryLightbox(grid, lightboxItems);
     });
   } catch (err) {
     console.error('Błąd pobierania galerii', err);

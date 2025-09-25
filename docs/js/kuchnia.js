@@ -13,6 +13,13 @@ async function loadGallery() {
       fig.appendChild(img);
       grid.appendChild(fig);
     });
+
+    const lightboxItems = images.map(image => ({
+      src: image.src,
+      alt: image.alt || '',
+      caption: image.alt || ''
+    }));
+    registerGalleryLightbox(grid, lightboxItems);
   } catch (err) {
     console.error('Błąd pobierania galerii', err);
   }

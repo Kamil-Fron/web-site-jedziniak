@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="./css/styles.css" />
 </head>
 <body>
-  <header class="hero">
+  <header class="hero hero--subpage hero--kuchnia">
         <nav class="nav">
       <h1 class="logo"><a href="index.html"><img src="./images/logo.png" alt="Vikimeble logo" /></a></h1>
       <button class="menu-toggle" aria-label="Menu"></button>
@@ -30,13 +30,37 @@
       </ul>
     </nav>
     <div class="hero-content">
-      <h2>Tworzymy meble, które kochasz</h2>
-      <p>Designerskie projekty z naturalnego drewna prosto z naszej pracowni.</p>
-      <a href="#gallery-grid" class="btn cta">Zobacz ofertę</a>
+      <p class="hero-eyebrow">Kuchnie Vikimeble</p>
+      <h2>Meble kuchenne na wymiar</h2>
+      <p>Projektujemy kuchnie, które łączą ergonomię codziennej pracy z ponadczasową estetyką. Każdy projekt powstaje na podstawie indywidualnych potrzeb domowników i charakteru wnętrza.</p>
+      <a href="#gallery-grid" class="btn cta">Zobacz realizacje</a>
     </div>
   </header>
 
-  <div id="gallery-grid" class="gallery grid"></div>
+  <main>
+    <section class="gallery section reveal">
+      <div class="container">
+        <h2>Galeria realizacji kuchni</h2>
+        <p class="section-lead">Zobacz, jak precyzyjnie dopracowane detale i szlachetne materiały sprawiają, że nasze kuchnie stają się sercem domu.</p>
+        <div id="gallery-grid" class="grid"></div>
+      </div>
+    </section>
+
+    <section class="category-description section reveal">
+      <div class="container">
+        <h2>Kuchnie dopasowane do rytmu Twojej rodziny</h2>
+        <p>Każda kuchnia powstaje w dialogu z klientem – od pierwszego szkicu po montaż w Twoim domu. Wykorzystujemy naturalne forniry, lite drewno i nowoczesne systemy okuć, aby stworzyć przestrzeń, która zachęca do wspólnego gotowania i celebracji codzienności.</p>
+        <p>Nasze projekty powstają z myślą o maksymalnym wykorzystaniu dostępnego metrażu. Ergonomiczne układy, przemyślane strefy przechowywania i oświetlenie dopasowane do funkcji poszczególnych stref sprawiają, że każda chwila w kuchni jest komfortowa.</p>
+        <h3>Dlaczego warto wybrać nasze meble kuchenne?</h3>
+        <ul class="category-highlights">
+          <li><strong>Funkcjonalne układy.</strong> Optymalizujemy rozmieszczenie szafek, sprzętów AGD i stref roboczych, aby gotowanie było intuicyjne i szybkie.</li>
+          <li><strong>Szlachetne materiały.</strong> Łączymy odporne na wilgoć płyty, naturalne forniry i kamienne blaty, dzięki czemu kuchnia zachowuje swoją formę przez lata.</li>
+          <li><strong>Kompleksowa obsługa.</strong> Od inwentaryzacji pomieszczenia, przez wizualizację 3D, aż po montaż – dbamy o każdy szczegół projektu.</li>
+        </ul>
+        <p>Masz wizję kuchni idealnej? Skontaktuj się z nami, aby stworzyć projekt, który odpowie na potrzeby Twojej rodziny i podkreśli charakter domu.</p>
+      </div>
+    </section>
+  </main>
 
   <footer class="footer">
     <p>&copy; <span id="year"></span> Vikimeble</p>
@@ -44,6 +68,7 @@
   </footer>
 
   <script src="./js/menu.js"></script>
+  <script src="./js/gallery-lightbox.js"></script>
   <script src="./js/kuchnia.js"></script>
 </body>
 </html>

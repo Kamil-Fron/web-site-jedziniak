@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="./css/styles.css" />
 </head>
 <body>
-  <header class="hero">
+  <header class="hero hero--subpage hero--sypialnia">
         <nav class="nav">
       <h1 class="logo"><a href="index.html"><img src="./images/logo.png" alt="Vikimeble logo" /></a></h1>
       <button class="menu-toggle" aria-label="Menu"></button>
@@ -30,13 +30,37 @@
       </ul>
     </nav>
     <div class="hero-content">
-      <h2>Tworzymy meble, które kochasz</h2>
-      <p>Designerskie projekty z naturalnego drewna prosto z naszej pracowni.</p>
-      <a href="#gallery-grid" class="btn cta">Zobacz ofertę</a>
+      <p class="hero-eyebrow">Sypialnie Vikimeble</p>
+      <h2>Meble do sypialni na wymiar</h2>
+      <p>Projektujemy łóżka, zabudowy garderobiane i toaletki, które tworzą atmosferę sprzyjającą odpoczynkowi. Łączymy miękkie tkaniny, naturalne drewno i subtelne oświetlenie, by sypialnia była prywatną strefą relaksu.</p>
+      <a href="#gallery-grid" class="btn cta">Zobacz realizacje</a>
     </div>
   </header>
 
-  <div id="gallery-grid" class="gallery grid"></div>
+  <main>
+    <section class="gallery section reveal">
+      <div class="container">
+        <h2>Galeria mebli do sypialni</h2>
+        <p class="section-lead">Poznaj nasze realizacje, w których sypialnia staje się idealnie dopasowaną przestrzenią wypoczynku.</p>
+        <div id="gallery-grid" class="grid"></div>
+      </div>
+    </section>
+
+    <section class="category-description section reveal">
+      <div class="container">
+        <h2>Sypialnia, w której łatwiej się wyciszyć</h2>
+        <p>Nasze projekty tworzymy na podstawie indywidualnych preferencji klientów. Wykonujemy zabudowy okalające łóżko, praktyczne szafy wnękowe oraz komody, które pomagają utrzymać porządek i podkreślają klimat wnętrza.</p>
+        <p>Stawiamy na naturalne materiały, miękkie tapicerki i detale, które wprowadzają spokój. Dzięki dopasowanemu oświetleniu i przemyślanej ergonomii sypialnia staje się miejscem regeneracji.</p>
+        <h3>Dlaczego nasze meble do sypialni?</h3>
+        <ul class="category-highlights">
+          <li><strong>Przemyślane przechowywanie.</strong> Projektujemy szafy i garderoby, które wykorzystują każdy centymetr przestrzeni.</li>
+          <li><strong>Komfortowe materiały.</strong> Łączymy drewno, forniry i tkaniny premium, tworząc przytulne i trwałe wnętrza.</li>
+          <li><strong>Atmosferyczne oświetlenie.</strong> Wprowadzamy subtelne światło LED, które sprzyja relaksowi i podkreśla charakter mebli.</li>
+        </ul>
+        <p>Zaproś nas do współpracy, a przygotujemy projekt sypialni, który będzie sprzyjał odpoczynkowi każdego dnia.</p>
+      </div>
+    </section>
+  </main>
 
   <footer class="footer">
     <p>&copy; <span id="year"></span> Vikimeble</p>
@@ -44,6 +68,7 @@
   </footer>
 
   <script src="./js/menu.js"></script>
+  <script src="./js/gallery-lightbox.js"></script>
   <script src="./js/sypialnia.js"></script>
 </body>
 </html>

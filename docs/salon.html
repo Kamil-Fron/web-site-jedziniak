@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="./css/styles.css" />
 </head>
 <body>
-  <header class="hero">
+  <header class="hero hero--subpage hero--salon">
         <nav class="nav">
       <h1 class="logo"><a href="index.html"><img src="./images/logo.png" alt="Vikimeble logo" /></a></h1>
       <button class="menu-toggle" aria-label="Menu"></button>
@@ -30,13 +30,37 @@
       </ul>
     </nav>
     <div class="hero-content">
-      <h2>Tworzymy meble, które kochasz</h2>
-      <p>Designerskie projekty z naturalnego drewna prosto z naszej pracowni.</p>
-      <a href="#gallery-grid" class="btn cta">Zobacz ofertę</a>
+      <p class="hero-eyebrow">Salony Vikimeble</p>
+      <h2>Meble do salonu na wymiar</h2>
+      <p>Tworzymy zabudowy RTV, biblioteki i meble wypoczynkowe, które organizują przestrzeń dzienną i podkreślają charakter wnętrza. Nasze projekty łączą funkcjonalność z wysublimowanym stylem.</p>
+      <a href="#gallery-grid" class="btn cta">Zobacz realizacje</a>
     </div>
   </header>
 
-  <div id="gallery-grid" class="gallery grid"></div>
+  <main>
+    <section class="gallery section reveal">
+      <div class="container">
+        <h2>Galeria mebli do salonu</h2>
+        <p class="section-lead">Zapoznaj się z naszymi realizacjami, w których salon staje się elegancką, komfortową strefą spotkań i odpoczynku.</p>
+        <div id="gallery-grid" class="grid"></div>
+      </div>
+    </section>
+
+    <section class="category-description section reveal">
+      <div class="container">
+        <h2>Salon, który przyciąga uwagę</h2>
+        <p>Salon to wizytówka domu – dlatego projektujemy meble, które porządkują przestrzeń, eksponują ulubione przedmioty i ukrywają to, co nie powinno być widoczne. Precyzyjne łączenie materiałów pozwala nadać wnętrzu nowoczesny, ale ciepły charakter.</p>
+        <p>W naszych realizacjach wykorzystujemy różnorodne struktury drewna, lakierowane fronty oraz metalowe akcenty. Dzięki temu meble idealnie wpisują się w zarówno minimalistyczne, jak i bardziej klasyczne aranżacje.</p>
+        <h3>Co wyróżnia nasze meble do salonu?</h3>
+        <ul class="category-highlights">
+          <li><strong>Spójne strefy wypoczynku.</strong> Projektujemy zabudowy RTV, biblioteki i stoliki, które tworzą harmonijną kompozycję.</li>
+          <li><strong>Detale stolarskie.</strong> Frezowane fronty, ukryte uchwyty i precyzyjne łączenia sprawiają, że meble wyglądają lekko i elegancko.</li>
+          <li><strong>Indywidualne wykończenia.</strong> Dobieramy kolory, faktury i oświetlenie tak, aby salon odzwierciedlał charakter domowników.</li>
+        </ul>
+        <p>Opowiedz nam o swoim salonie, a przygotujemy projekt, który stworzy wyjątkową przestrzeń do odpoczynku i spotkań.</p>
+      </div>
+    </section>
+  </main>
 
   <footer class="footer">
     <p>&copy; <span id="year"></span> Vikimeble</p>
@@ -44,6 +68,7 @@
   </footer>
 
   <script src="./js/menu.js"></script>
+  <script src="./js/gallery-lightbox.js"></script>
   <script src="./js/salon.js"></script>
 </body>
 </html>
