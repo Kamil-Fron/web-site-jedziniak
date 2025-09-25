@@ -8,8 +8,8 @@
   <link rel="stylesheet" href="./css/styles.css" />
 </head>
 <body>
-  <header class="hero">
-    <nav class="nav">
+  <header class="subpage-header">
+    <nav class="nav nav--solid">
       <h1 class="logo"><a href="index.html"><img src="./images/logo.png" alt="Vikimeble logo" /></a></h1>
       <button class="menu-toggle" aria-label="Menu"></button>
       <ul>
@@ -29,14 +29,35 @@
         <li><a href="tel:787138178" class="phone">787 138 178</a></li>
       </ul>
     </nav>
-    <div class="hero-content">
-      <h2>Tworzymy meble, które kochasz</h2>
-      <p>Designerskie projekty z naturalnego drewna prosto z naszej pracowni.</p>
-      <a href="#gallery-all" class="btn cta">Zobacz ofertę</a>
+    <div class="subpage-header__title">
+      <div class="container">
+        <h1>Realizacje – Galeria</h1>
+      </div>
     </div>
   </header>
 
-  <div id="gallery-all" class="gallery grid"></div>
+  <main>
+    <section class="gallery section gallery--full">
+      <div class="container container--wide">
+        <div id="gallery-all" class="gallery-collection"></div>
+      </div>
+    </section>
+
+    <section class="gallery-description section">
+      <div class="container container--narrow">
+        <h2>Meble na wymiar dopasowane do Twojego wnętrza</h2>
+        <p>Każda realizacja, którą pokazujemy w galerii, to efekt bliskiej współpracy z klientem oraz dbałości o detale na każdym etapie projektu. Rozpoczynamy od poznania stylu życia domowników, następnie przygotowujemy koncepcję, dobieramy materiały i kolorystykę, a na końcu dopracowujemy funkcjonalne rozwiązania, które sprawiają, że meble stają się integralną częścią przestrzeni.</p>
+        <p>Zdjęcia prezentują zarówno duże zabudowy wykonywane do całych pomieszczeń, jak i pojedyncze elementy, które nadają charakteru wnętrzu. Pokazujemy różnorodne układy, wykończenia i połączenia materiałów, aby zainspirować Cię do stworzenia własnej, spersonalizowanej aranżacji.</p>
+        <h3>Dlaczego warto przejrzeć nasze realizacje?</h3>
+        <ul class="gallery-description__highlights">
+          <li><strong>Realne projekty.</strong> Wszystkie prezentowane zestawy powstały na indywidualne zamówienie w domach naszych klientów.</li>
+          <li><strong>Sprawdzone rozwiązania.</strong> W galerii znajdziesz przykłady zabudów, które łączą ergonomię z estetyką, niezależnie od metrażu.</li>
+          <li><strong>Inspiracje materiałowe.</strong> Pokazujemy różne gatunki drewna, forniry i kolory frontów, aby łatwiej było dobrać styl dopasowany do Twojego wnętrza.</li>
+        </ul>
+        <p>Jeśli masz własny pomysł na meble, chętnie przygotujemy projekt i przedstawimy wizualizacje dopasowane do Twojej przestrzeni. Skontaktuj się z nami, aby omówić szczegóły współpracy.</p>
+      </div>
+    </section>
+  </main>
 
   <footer class="footer">
     <p>&copy; <span id="year"></span> Vikimeble</p>
