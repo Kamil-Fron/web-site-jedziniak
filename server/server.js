@@ -125,15 +125,17 @@ function refreshCategories() {
 }
 
 function ensureAuth(req, res, next) {
-  console.log(req.session);
   if (req.session && req.session.loggedIn) return next();
+  if (req.originalUrl.startsWith('/api/')) {
+    return res.status(401).json({ error: 'Brak autoryzacji' });
+  }
   res.redirect('/login');
 }
 
 app.get('/api/gallery', (req, res) => {
   const { mode } = req.query;
   if (mode === 'full' && !(req.session && req.session.loggedIn)) {
-    return res.redirect('/login');
+    return res.status(401).json({ error: 'Brak autoryzacji' });
   }
   try {
     let images = loadGalleryData();
