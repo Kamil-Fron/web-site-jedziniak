@@ -7,32 +7,68 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/styles.css" />
 </head>
-<body>
-  <nav class="nav">
-    <h1 class="logo"><a href="../index.html"><img src="../images/logo.png" alt="Vikimeble logo" /></a></h1>
-    <button class="menu-toggle" aria-label="Menu"></button>
-    <a href="../index.html#gallery" class="btn">Galeria</a>
-    <a href="../index.html#contact" class="btn nav-cta">Kontakt</a>
-    <a href="/api/logout" class="btn">Wyloguj</a>
+<body class="admin-dashboard-body">
+  <nav class="nav nav--solid admin-nav">
+    <div class="admin-nav__left">
+      <h1 class="logo"><a href="../index.html"><img src="../images/logo.png" alt="Vikimeble logo" /></a></h1>
+      <span class="admin-nav__title">Panel administracyjny</span>
+    </div>
+    <div class="admin-nav__actions">
+      <a href="../index.html" class="admin-nav__link">Strona główna</a>
+      <a href="/api/logout" class="btn btn--outline">Wyloguj</a>
+    </div>
   </nav>
-  <main>
-    <h2>Zarządzanie galerią</h2>
+  <main class="admin-main">
+    <section class="admin-hero">
+      <div>
+        <h2>Witaj w panelu zarządzania</h2>
+        <p>Dodawaj i usuwaj zdjęcia z galerii oraz dbaj o aktualność oferty w kilku prostych krokach.</p>
+      </div>
+      <div class="admin-hero__badge">Nowe: filtrowanie kategorii</div>
+    </section>
 
-    <section id="gallery-list"></section>
+    <section class="admin-grid">
+      <article class="admin-card admin-card--form">
+        <div class="admin-card__header">
+          <div>
+            <h2>Dodaj nowe zdjęcia</h2>
+            <p class="admin-card__subtitle">Wybierz kategorię i załaduj pliki, aby natychmiast pojawiły się w galerii.</p>
+          </div>
+        </div>
+        <form id="upload-form" class="admin-form" enctype="multipart/form-data">
+          <div class="admin-form__grid">
+            <label class="admin-field">
+              <span>Kategoria</span>
+              <select name="category">
+                <option value="kuchnia">kuchnia</option>
+                <option value="salon">salon</option>
+                <option value="sypialnia">sypialnia</option>
+                <option value="lazienka">lazienka</option>
+                <option value="inne">inne</option>
+              </select>
+            </label>
+            <label class="admin-field admin-field--file">
+              <span>Zdjęcia</span>
+              <input type="file" name="images" accept="image/*" multiple required />
+            </label>
+          </div>
+          <p class="form-hint">Możesz zaznaczyć kilka plików naraz.</p>
+          <div id="preview" class="admin-preview"></div>
+          <button class="btn btn--wide" type="submit">Dodaj zdjęcia</button>
+        </form>
+      </article>
 
-    <form id="upload-form" enctype="multipart/form-data">
-      <select name="category">
-        <option value="kuchnia">kuchnia</option>
-        <option value="salon">salon</option>
-        <option value="sypialnia">sypialnia</option>
-        <option value="lazienka">lazienka</option>
-        <option value="inne">inne</option>
-      </select>
-      <input type="file" name="images" accept="image/*" multiple required />
-      <p class="form-hint">Możesz zaznaczyć kilka plików naraz</p>
-      <div id="preview"></div>
-      <button type="submit">Dodaj zdjęcie</button>
-    </form>
+      <article class="admin-card admin-card--list">
+        <div class="admin-card__header">
+          <div>
+            <h2>Zarządzanie galerią</h2>
+            <p class="admin-card__subtitle">Przeglądaj zdjęcia według kategorii i szybko usuwaj te, które nie są już potrzebne.</p>
+          </div>
+          <div class="admin-toolbar" id="gallery-toolbar"></div>
+        </div>
+        <div id="gallery-list" class="admin-gallery-list"></div>
+      </article>
+    </section>
   </main>
 
   <script src="../js/menu.js"></script>
