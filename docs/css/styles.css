@@ -48,7 +48,8 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background: rgba(0,0,0,0.4);
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(4px);
 }
 .nav > ul {
   list-style: none;
@@ -65,6 +66,17 @@ body {
 .nav a {
   color: var(--light);
   text-decoration: none;
+  display: block;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  font-weight: 500;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+.nav a:hover,
+.nav a:focus-visible {
+  background: rgba(255, 255, 255, 0.18);
+  color: var(--light);
 }
 
 .menu-toggle {
@@ -85,18 +97,21 @@ body {
 }
 
 .submenu {
-  max-height: 0;
-  overflow: hidden;  
   position: absolute;
-  top: 100%;
+  top: calc(100% + 0.5rem);
   left: 0;
-  background: rgba(0,0,0,0.8);
+  min-width: 12rem;
+  background: rgba(5, 5, 5, 0.92);
   list-style: none;
   margin: 0;
-  padding: 0.5rem 0;
+  padding: 0.75rem 0;
+  border-radius: 0.75rem;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
   z-index: 1000;
-  transition: max-height 0.3s ease;
-
 }
 
 .submenu li {
@@ -107,29 +122,56 @@ body {
   display: block;
   padding: 0.5rem 1rem;
   color: var(--light);
+  border-radius: 0.35rem;
+  font-weight: 400;
+  transition: background 0.25s ease;
+}
+
+.submenu a:hover,
+.submenu a:focus-visible {
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .dropdown:hover .submenu,
+.dropdown:focus-within .submenu,
 .dropdown.open .submenu {
-  max-height: 300px; /* enough to show all menu items */
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
 }
 
 @media (max-width: 768px) {
   .submenu {
     position: static;
+    margin: 0;
+    padding: 0;
+    border-radius: 0;
+    box-shadow: none;
+    background: transparent;
+    opacity: 0;
+    transform: none;
+    pointer-events: none;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
   }
   .nav {
     position: relative;
     height: 60px;
+    background: rgba(0,0,0,0.65);
+    backdrop-filter: blur(6px);
   }
   .nav > ul {
     position: fixed;
     top: 0;
     right: -100%;
     height: 100vh;
-    width: 250px;
+    width: min(320px, 85vw);
     flex-direction: column;
-    background: rgba(0,0,0,0.8);
+    gap: 0;
+    padding: 5rem 2rem 2rem;
+    background: rgba(10, 10, 10, 0.95);
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.35);
     transition: right 0.3s ease;
   }
   .menu-toggle {
@@ -137,6 +179,24 @@ body {
   }
   .nav.open > ul {
     right: 0;
+  }
+  .nav > ul > li {
+    width: 100%;
+  }
+  .nav > ul > li > a {
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+  }
+  .dropdown.open .submenu {
+    padding: 0.25rem 0 0.75rem;
+    background: rgba(255, 255, 255, 0.04);
+    max-height: 500px;
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .dropdown.open .submenu a {
+    padding-left: 1.5rem;
+    border-radius: 0.35rem;
   }
 }
 
