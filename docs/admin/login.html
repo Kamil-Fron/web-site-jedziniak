@@ -6,9 +6,9 @@
   <title>Logowanie</title>
   <link rel="stylesheet" href="../css/styles.css" />
 </head>
-<body>
-  <header>
-    <nav class="nav">
+<body class="admin-login">
+  <header class="admin-login__header">
+    <nav class="nav nav--solid admin-nav">
       <h1 class="logo"><a href="../index.html"><img src="../images/logo.png" alt="Vikimeble logo" /></a></h1>
       <ul>
         <li><a href="../index.html#gallery">Galeria</a></li>
@@ -29,16 +29,24 @@
     </nav>
   </header>
 
-   <main class="login-main">
-    <form id="login-form" action="/api/login" method="POST">
-      <label>Login
-        <input type="text" name="username" placeholder="Login" required />
-      </label>
-      <label>Hasło
-        <input type="password" name="password" placeholder="Hasło" required />
-      </label>
-      <button type="submit">Zaloguj</button>
-    </form>
+  <main class="login-main">
+    <section class="login-intro">
+      <h2>Panel administracyjny Vikimeble</h2>
+      <p>Zaloguj się, aby zarządzać galerią zdjęć oraz aktualizować ofertę. Twoje dane są chronione dzięki bezpiecznemu połączeniu.</p>
+    </section>
+    <section class="login-card">
+      <h2>Zaloguj się</h2>
+      <p class="login-subtitle">Wprowadź dane dostępowe do panelu.</p>
+      <form id="login-form" action="/api/login" method="POST">
+        <label for="username">Login</label>
+        <input id="username" type="text" name="username" placeholder="np. admin" required />
+
+        <label for="password">Hasło</label>
+        <input id="password" type="password" name="password" placeholder="Wpisz hasło" required />
+
+        <button class="btn btn--wide" type="submit">Zaloguj się</button>
+      </form>
+    </section>
   </main>
 
   <footer class="footer">
