@@ -9,10 +9,19 @@ require('dotenv').config();
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+const sessionTtl = Number(process.env.SESSION_TTL_MS) || 1000 * 60 * 60 * 6; // 6 godzin
+
 app.use(session({
   secret: process.env.SESSION_SECRET || 'tajny',
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  rolling: true,
+  name: 'vikimeble.sid',
+  cookie: {
+    httpOnly: true,
+    sameSite: 'lax',
+    maxAge: sessionTtl
+  }
 }));
 
 const publicDir = path.join(__dirname, '../docs');
@@ -37,6 +46,54 @@ const categoriesFile = path.join(__dirname, 'categories.json');
 const usersFile = path.join(__dirname, 'users.json');
 const upload = multer({ dest: path.join(publicDir, 'images') });
 
+function loadGalleryData() {
+  let images = [];
+  try {
+    images = JSON.parse(fs.readFileSync(galleryFile));
+  } catch (e) {
+    return [];
+  }
+
+  let changed = false;
+  let maxId = images.reduce((max, img) => {
+    const id = Number(img.id);
+    return Number.isFinite(id) && id > max ? id : max;
+  }, 0);
+
+  const normalised = images.map(img => {
+    const numericId = Number(img.id);
+    if (Number.isFinite(numericId)) {
+      if (numericId !== img.id) {
+        changed = true;
+        return { ...img, id: numericId };
+      }
+      return img;
+    }
+    changed = true;
+    const newId = ++maxId;
+    return { ...img, id: newId };
+  });
+
+  if (changed) {
+    fs.writeFileSync(galleryFile, JSON.stringify(normalised, null, 2));
+  }
+
+  return normalised;
+}
+
+function saveGalleryData(images) {
+  fs.writeFileSync(galleryFile, JSON.stringify(images, null, 2));
+}
+
+function nextGalleryId(images) {
+  return (
+    images.reduce((max, img) => {
+      const id = Number(img.id);
+      return Number.isFinite(id) && id > max ? id : max;
+    }, 0) + 1
+  );
+}
+
 function loadUsers() {
   try {
     return JSON.parse(fs.readFileSync(usersFile));
@@ -60,7 +117,7 @@ if (users.length === 0) {
 
 // Rebuilds categories.json using the first four images from each category
 function refreshCategories() {
-  const images = JSON.parse(fs.readFileSync(galleryFile));
+  const images = loadGalleryData();
   const categories = images.reduce((acc, img) => {
     const cat = img.category || 'inne';
     (acc[cat] = acc[cat] || []).push({
@@ -77,19 +134,20 @@ function refreshCategories() {
 }
 
 function ensureAuth(req, res, next) {
-  console.log(req.session);
   if (req.session && req.session.loggedIn) return next();
+  if (req.originalUrl.startsWith('/api/')) {
+    return res.status(401).json({ error: 'Brak autoryzacji' });
+  }
   res.redirect('/login');
 }
 
 app.get('/api/gallery', (req, res) => {
   const { mode } = req.query;
   if (mode === 'full' && !(req.session && req.session.loggedIn)) {
-    return res.redirect('/login');
+    return res.status(401).json({ error: 'Brak autoryzacji' });
   }
-  fs.readFile(galleryFile, (err, data) => {
-    if (err) return res.status(500).send('Błąd odczytu');
-    let images = JSON.parse(data);
+  try {
+    let images = loadGalleryData();
 
     const { category } = req.query;
     if (category) {
@@ -115,7 +173,9 @@ app.get('/api/gallery', (req, res) => {
     });
 
     res.json(mapped);
-  });
+  } catch (err) {
+    res.status(500).send('Błąd odczytu');
+  }
 });
 
 app.get('/api/categories', (req, res) => {
@@ -133,13 +193,31 @@ app.get('/api/refresh-categories', ensureAuth, (req, res) => {
 app.post('/api/login', (req, res) => {
   const { username, password } = req.body;
   const user = users.find(u => u.username === username);
-  if (user && bcrypt.compareSync(password, user.passwordHash)) {
+  if (!user || !bcrypt.compareSync(password, user.passwordHash)) {
+    return res.status(401).send('Błędny login lub hasło');
+  }
+
+  req.session.regenerate(err => {
+    if (err) {
+      console.error('Nie udało się zregenerować sesji', err);
+      return res.status(500).send('Błąd logowania');
+    }
+
     req.session.loggedIn = true;
     req.session.username = username;
-    res.redirect('/admin/dashboard.html');
-  } else {
-    res.status(401).send('Błędny login lub hasło');
-  }
+
+    req.session.save(saveErr => {
+      if (saveErr) {
+        console.error('Nie udało się zapisać sesji', saveErr);
+        return res.status(500).send('Błąd logowania');
+      }
+      const acceptsHtml = (req.headers.accept || '').includes('text/html');
+      if (acceptsHtml) {
+        return res.redirect('/admin/dashboard.html');
+      }
+      res.json({ ok: true, redirect: '/admin/dashboard.html' });
+    });
+  });
 });
 
 app.post('/api/register', (req, res) => {
@@ -161,29 +239,38 @@ app.get('/api/logout', (req, res) => {
   });
 });
 
+app.get('/api/session/keep-alive', ensureAuth, (req, res) => {
+  // Dotknięcie sesji zapewnia odświeżenie czasu życia ciasteczka.
+  if (typeof req.session.touch === 'function') {
+    req.session.touch();
+  }
+  res.json({ ok: true, user: req.session.username, expiresInMs: req.session.cookie.maxAge });
+});
+
 app.post('/api/upload', ensureAuth, upload.array('images'), (req, res) => {
-  const images = JSON.parse(fs.readFileSync(galleryFile));
+  const images = loadGalleryData();
+  let idCounter = nextGalleryId(images);
   const uploaded = req.files.map((file, idx) => {
     const img = {
-      id: Date.now() + idx,
+      id: idCounter + idx,
       filename: file.filename,
       category: req.body.category
     };
     images.push(img);
     return img;
   });
-  fs.writeFileSync(galleryFile, JSON.stringify(images, null, 2));
+  saveGalleryData(images);
   refreshCategories();
   res.json(uploaded);
 });
 
 app.delete('/api/gallery/:id', ensureAuth, (req, res) => {
-  const id = parseInt(req.params.id, 10);
-  const images = JSON.parse(fs.readFileSync(galleryFile));
+  const id = Number(req.params.id);
+  const images = loadGalleryData();
   const index = images.findIndex(i => i.id === id);
   if (index === -1) return res.status(404).end();
   const [img] = images.splice(index, 1);
-  fs.writeFileSync(galleryFile, JSON.stringify(images, null, 2));
+  saveGalleryData(images);
   try {
     fs.unlinkSync(path.join(publicDir, 'images', img.filename));
   } catch (e) {

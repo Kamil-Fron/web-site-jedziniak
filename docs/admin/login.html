@@ -50,22 +50,47 @@
   <script src="../js/main.js"></script>
 
   <script>
-    document
-      .getElementById('login-form')
-      .addEventListener('submit', async function (e) {
-        e.preventDefault();
-        const body = new URLSearchParams(new FormData(e.target));
-        const res = await fetch('/api/login', {
-          method: 'POST',
-          body,
-          credentials: 'same-origin',
-        });
-        if (res.ok) {
-          window.location.href = 'admin/dashboard.html';
-        } else {
-          alert('Nieprawidłowy login lub hasło');
-        }
+    const form = document.getElementById('login-form');
+    const savedUsername = localStorage.getItem('vikimeble.admin.username');
+    if (savedUsername) {
+      form.username.value = savedUsername;
+    }
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const body = new URLSearchParams(new FormData(e.target));
+      const res = await fetch('/api/login', {
+        method: 'POST',
+        body,
+        credentials: 'same-origin',
       });
+
+      if (res.ok) {
+        const usernameValue = form.username.value.trim();
+        if (usernameValue) {
+          localStorage.setItem('vikimeble.admin.username', usernameValue);
+        }
+
+        let redirectTo = '/admin/dashboard.html';
+        try {
+          const data = await res.json();
+          if (data && data.redirect) {
+            redirectTo = data.redirect;
+          }
+        } catch (err) {
+          // Ignorujemy brak JSON – użyjemy ścieżki domyślnej.
+        }
+
+        window.location.href = redirectTo;
+        return;
+      }
+
+      if (res.status === 401) {
+        alert('Nieprawidłowy login lub hasło');
+      } else {
+        alert('Wystąpił błąd podczas logowania. Spróbuj ponownie.');
+      }
+    });
   </script>
 </body>
 </html>
