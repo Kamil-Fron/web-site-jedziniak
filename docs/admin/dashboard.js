@@ -15,6 +15,25 @@ let galleryData = [];
 
 filter.addEventListener('change', renderGallery);
 
+async function fetchOrRedirect(url, options = {}) {
+  const { silent, ...fetchOptions } = options;
+  const config = { ...fetchOptions, credentials: 'include' };
+  try {
+    const res = await fetch(url, config);
+    if (res.status === 401) {
+      window.location.href = '/login';
+      return null;
+    }
+    return res;
+  } catch (error) {
+    console.error('Błąd połączenia z serwerem', error);
+    if (!silent) {
+      alert('Wystąpił problem z połączeniem z serwerem.');
+    }
+    return null;
+  }
+}
+
 fileInput.addEventListener('change', () => {
   preview.innerHTML = '';
   for (const file of fileInput.files) {
@@ -50,25 +69,32 @@ function renderPreview(sectionId, images, link) {
 // Pobiera dane miniatur dla wszystkich kategorii i aktualizuje sekcje
 // na stronie. Funkcja może być uruchamiana po dodaniu obrazu lub
 // periodycznie w celu odświeżania widoku.
-function refreshPreviews() {
-  fetch('/api/categories')
-    .then(res => res.json())
-    .then(data => {
-      renderPreview('kuchnia-preview', data.kuchnia || [], 'kuchnia.html');
-      renderPreview('salon-preview', data.salon || [], 'salon.html');
-      renderPreview('lazienka-preview', data.lazienka || [], 'lazienka.html');
-      renderPreview('inne-preview', data.inne || [], 'inne.html');
-    });
+async function refreshPreviews() {
+  const res = await fetchOrRedirect('/api/categories', { silent: true });
+  if (!res) return;
+  try {
+    const data = await res.json();
+    renderPreview('kuchnia-preview', data.kuchnia || [], 'kuchnia.html');
+    renderPreview('salon-preview', data.salon || [], 'salon.html');
+    renderPreview('lazienka-preview', data.lazienka || [], 'lazienka.html');
+    renderPreview('inne-preview', data.inne || [], 'inne.html');
+  } catch (error) {
+    console.error('Nie udało się odczytać danych kategorii', error);
+  }
 }
 
-function loadGallery() {
-  fetch('/api/gallery?mode=full')
-    .then(res => res.json())
-    .then(images => {
-      galleryData = images;
-      updateFilterOptions();
-      renderGallery();
-    });
+async function loadGallery() {
+  const res = await fetchOrRedirect('/api/gallery?mode=full');
+  if (!res) return;
+  try {
+    const images = await res.json();
+    galleryData = images;
+    updateFilterOptions();
+    renderGallery();
+  } catch (error) {
+    console.error('Nie udało się odczytać danych galerii', error);
+    alert('Wystąpił błąd podczas ładowania galerii.');
+  }
 }
 
 function updateFilterOptions() {
@@ -114,9 +140,10 @@ function renderGallery() {
       btn.onclick = async () => {
         btn.disabled = true;
         try {
-          const res = await fetch(`/api/gallery/${img.id}`, { method: 'DELETE', credentials: 'include' });
+          const res = await fetchOrRedirect(`/api/gallery/${img.id}`, { method: 'DELETE' });
+          if (!res) return;
           if (res.ok) {
-            loadGallery();
+            await loadGallery();
           } else {
             console.error('Delete failed with status', res.status);
             alert('Nie udało się usunąć zdjęcia. Status: ' + res.status);
@@ -149,12 +176,14 @@ form.addEventListener('submit', async e => {
     for (const file of formData.getAll('images')) {
       data.append('images', file);
     }
-    const uploadRes = await fetch('/api/upload', { method: 'POST', body: data, credentials: 'include' });
+    const uploadRes = await fetchOrRedirect('/api/upload', { method: 'POST', body: data });
+    if (!uploadRes) return;
     if (!uploadRes.ok) {
       console.error('Upload failed with status', uploadRes.status);
       throw new Error('Upload failed');
     }
-    const refreshRes = await fetch('/api/refresh-categories');
+    const refreshRes = await fetchOrRedirect('/api/refresh-categories');
+    if (!refreshRes) return;
     if (!refreshRes.ok) {
       console.error('Refresh failed with status', refreshRes.status);
       throw new Error('Refresh failed');
@@ -162,8 +191,8 @@ form.addEventListener('submit', async e => {
     form.reset();
     preview.innerHTML = '';
     fileInput.value = '';
-    loadGallery();
-    refreshPreviews();
+    await loadGallery();
+    await refreshPreviews();
   } catch (err) {
     console.error(err);
     alert('Wystąpił błąd podczas przesyłania plików.');
@@ -178,3 +207,8 @@ refreshPreviews();
 // Okresowe odświeżanie miniatur, aby nowe zdjęcia pojawiały się
 // bez konieczności przeładowywania strony głównej.
 setInterval(refreshPreviews, 10000);
+
+// Utrzymuj ważność sesji, wykonując okresowe pingowanie serwera.
+setInterval(() => {
+  fetchOrRedirect('/api/session/keep-alive', { silent: true, cache: 'no-store' });
+}, 2 * 60 * 1000);
