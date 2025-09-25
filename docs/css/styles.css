@@ -1222,7 +1222,6 @@ body.lightbox-open {
   font-size: 0.85rem;
   color: #6b6b6b;
 }
-
 .admin-nav__actions {
   display: flex;
   align-items: center;
@@ -1320,7 +1319,6 @@ body.lightbox-open {
   color: #6b6b6b;
   font-size: 0.95rem;
 }
-
 .admin-form {
   display: flex;
   flex-direction: column;
@@ -1405,6 +1403,7 @@ body.lightbox-open {
   flex-direction: column;
   gap: 1rem;
   border: 1px solid rgba(15, 15, 15, 0.05);
+  overflow: hidden;
 }
 
 .admin-gallery-group__header {
@@ -1422,12 +1421,39 @@ body.lightbox-open {
   padding-bottom: 0.5rem;
 }
 
+.scroll-gallery {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  width: 100%;
+  padding-bottom: 0.75rem;
+  padding-inline: 0.25rem;
+  scroll-snap-type: x proximity;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
+  -webkit-overflow-scrolling: touch;
+}
+
+.scroll-gallery::-webkit-scrollbar {
+  height: 8px;
+}
+
+.scroll-gallery::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scroll-gallery::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 999px;
+}
 .admin-gallery__item {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.75rem;
   min-width: 170px;
+  flex: 0 0 auto;
+  scroll-snap-align: start;
 }
 
 .admin-delete-btn {

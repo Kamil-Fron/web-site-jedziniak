@@ -91,13 +91,14 @@ async function refreshPreviews() {
   }
 }
 
-async function loadGallery() {
+async function loadGallery({ preserveFilter = true } = {}) {
+  const previousValue = preserveFilter ? filter.value : '';
   const res = await fetchOrRedirect('/api/gallery?mode=full');
   if (!res) return;
   try {
     const images = await res.json();
     galleryData = images;
-    updateFilterOptions();
+    updateFilterOptions(previousValue);
     renderGallery();
   } catch (error) {
     console.error('Nie udało się odczytać danych galerii', error);
@@ -105,7 +106,7 @@ async function loadGallery() {
   }
 }
 
-function updateFilterOptions() {
+function updateFilterOptions(selectedValue = '') {
   const categories = Array.from(new Set(galleryData.map(img => img.category || 'Inne')));
   filter.querySelectorAll('option:not(:first-child)').forEach(opt => opt.remove());
   categories.forEach(cat => {
@@ -114,6 +115,8 @@ function updateFilterOptions() {
     option.textContent = cat;
     filter.appendChild(option);
   });
+  const hasSelected = selectedValue && categories.includes(selectedValue);
+  filter.value = hasSelected ? selectedValue : '';
 }
 
 function renderGallery() {
