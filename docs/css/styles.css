@@ -77,9 +77,9 @@ body {
   font-weight: 500;
   transition: background 0.25s ease, color 0.25s ease;
 }
-
 .nav > ul > li > a:hover,
 .nav > ul > li > a:focus-visible {
+
   background: rgba(255, 255, 255, 0.18);
   color: var(--light);
 }
