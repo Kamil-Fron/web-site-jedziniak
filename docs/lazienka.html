@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="./css/styles.css" />
 </head>
 <body>
-  <header class="hero">
+  <header class="hero hero--subpage hero--lazienka">
         <nav class="nav">
       <h1 class="logo"><a href="index.html"><img src="./images/logo.png" alt="Vikimeble logo" /></a></h1>
       <button class="menu-toggle" aria-label="Menu"></button>
@@ -30,13 +30,37 @@
       </ul>
     </nav>
     <div class="hero-content">
-      <h2>Tworzymy meble, które kochasz</h2>
-      <p>Designerskie projekty z naturalnego drewna prosto z naszej pracowni.</p>
-      <a href="#gallery-grid" class="btn cta">Zobacz ofertę</a>
+      <p class="hero-eyebrow">Łazienki Vikimeble</p>
+      <h2>Meble łazienkowe na wymiar</h2>
+      <p>Tworzymy zabudowy, które znoszą intensywne użytkowanie i wilgoć, a przy tym wprowadzają do łazienki spokój i harmonię. Każdy projekt łączymy z dopasowanym oświetleniem i eleganckimi dodatkami.</p>
+      <a href="#gallery-grid" class="btn cta">Zobacz realizacje</a>
     </div>
   </header>
 
-  <div id="gallery-grid" class="gallery grid"></div>
+  <main>
+    <section class="gallery section reveal">
+      <div class="container">
+        <h2>Galeria mebli łazienkowych</h2>
+        <p class="section-lead">Prezentujemy łazienki, w których ponadczasowa elegancja spotyka się z praktycznymi rozwiązaniami dla małych i dużych przestrzeni.</p>
+        <div id="gallery-grid" class="grid"></div>
+      </div>
+    </section>
+
+    <section class="category-description section reveal">
+      <div class="container">
+        <h2>Łazienka skrojona pod Twoje potrzeby</h2>
+        <p>Projektujemy meble, które porządkują przestrzeń i pomagają utrzymać harmonię w każdej łazience. Zastosowanie lakierowanych frontów, płyt kompaktowych oraz naturalnego drewna zabezpieczonego olejami pozwala uzyskać trwały efekt, odporny na działanie wilgoci.</p>
+        <p>Dbamy o każdy detal – od ukrytych koszy na bieliznę, przez praktyczne szuflady na kosmetyki, po dopasowane lustra i oświetlenie LED, które podkreśla atmosferę domowego spa.</p>
+        <h3>Nasze atuty w meblach łazienkowych</h3>
+        <ul class="category-highlights">
+          <li><strong>Odporne materiały.</strong> Stosujemy komponenty dedykowane do pomieszczeń wilgotnych, aby meble zachowały formę i kolor na lata.</li>
+          <li><strong>Przemyślana organizacja.</strong> Projektujemy schowki i systemy segregacji, które pomagają utrzymać porządek w codziennym użytkowaniu.</li>
+          <li><strong>Spójny design.</strong> Integrujemy meble z zabudową sanitarną i armaturą, tworząc harmonijną, elegancką przestrzeń.</li>
+        </ul>
+        <p>Powiedz nam, jakie wrażenie ma robić Twoja łazienka – przygotujemy projekt, który połączy relaks z funkcjonalnością.</p>
+      </div>
+    </section>
+  </main>
 
   <footer class="footer">
     <p>&copy; <span id="year"></span> Vikimeble</p>
