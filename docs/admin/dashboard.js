@@ -5,11 +5,19 @@ const preview = document.getElementById('preview');
 
 // Dynamiczny filtr kategorii
 const filter = document.createElement('select');
+filter.classList.add('admin-filter');
 const allOption = document.createElement('option');
 allOption.value = '';
 allOption.textContent = 'Wszystkie kategorie';
 filter.appendChild(allOption);
-list.parentNode.insertBefore(filter, list);
+filter.setAttribute('aria-label', 'Filtruj listę galerii');
+
+const toolbar = document.getElementById('gallery-toolbar');
+if (toolbar) {
+  toolbar.appendChild(filter);
+} else {
+  list.parentNode.insertBefore(filter, list);
+}
 
 let galleryData = [];
 
@@ -120,22 +128,41 @@ function renderGallery() {
     return acc;
   }, {});
 
-  Object.keys(groups).forEach(cat => {
+  const categories = Object.keys(groups);
+
+  if (categories.length === 0) {
+    const empty = document.createElement('p');
+    empty.classList.add('admin-empty');
+    empty.textContent = 'Brak zdjęć w wybranej kategorii.';
+    list.appendChild(empty);
+    return;
+  }
+
+  categories.forEach(cat => {
     const section = document.createElement('section');
+    section.classList.add('admin-gallery-group');
+
+    const header = document.createElement('div');
+    header.classList.add('admin-gallery-group__header');
     const heading = document.createElement('h3');
-    heading.textContent = cat;
-    section.appendChild(heading);
+    heading.textContent = cat.charAt(0).toUpperCase() + cat.slice(1);
+    header.appendChild(heading);
+    section.appendChild(header);
 
     const container = document.createElement('div');
     container.classList.add('scroll-gallery', 'admin-gallery');
     groups[cat].forEach(img => {
       const wrapper = document.createElement('div');
+      wrapper.classList.add('admin-gallery__item');
       const image = document.createElement('img');
       const src = img.src || `../images/${img.filename}`;
       image.src = src;
       image.width = 150;
+      image.height = 100;
+      image.loading = 'lazy';
       const btn = document.createElement('button');
       btn.type = 'button';
+      btn.classList.add('admin-delete-btn');
       btn.textContent = 'Usuń';
       btn.onclick = async () => {
         btn.disabled = true;

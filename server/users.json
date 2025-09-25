@@ -1,1 +1,6 @@
-[]
+[
+  {
+    "username": "admin",
+    "passwordHash": "$2a$10$IDtIdo8jeWx3LkwrCKqTdeuf0J67zUj.UjpX7MW8IK7myzyIaf8vi"
+  }
+]

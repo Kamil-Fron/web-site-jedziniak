@@ -106,14 +106,45 @@ function saveUsers(users) {
   fs.writeFileSync(usersFile, JSON.stringify(users, null, 2));
 }
 
+const defaultUsername = process.env.ADMIN_USER || 'admin';
+const defaultPassword = process.env.ADMIN_PASSWORD || 'mariusz';
+const legacyDefaultPassword = 'admin';
+
 let users = loadUsers();
-if (users.length === 0) {
-  const username = process.env.ADMIN_USER || 'admin';
-  const password = process.env.ADMIN_PASSWORD || 'admin';
-  const hash = bcrypt.hashSync(password, 10);
-  users.push({ username, passwordHash: hash });
-  saveUsers(users);
+
+function ensureDefaultAdminUser() {
+  let shouldSave = false;
+  let adminUser = users.find(user => user.username === defaultUsername);
+
+  if (!adminUser) {
+    const hash = bcrypt.hashSync(defaultPassword, 10);
+    users.push({ username: defaultUsername, passwordHash: hash });
+    shouldSave = true;
+  } else {
+    const hasEnvPassword = Boolean(process.env.ADMIN_PASSWORD);
+    const desiredPassword = hasEnvPassword ? defaultPassword : null;
+    const currentHash = adminUser.passwordHash;
+
+    if (!currentHash) {
+      adminUser.passwordHash = bcrypt.hashSync(defaultPassword, 10);
+      shouldSave = true;
+    } else if (hasEnvPassword) {
+      if (!bcrypt.compareSync(desiredPassword, currentHash)) {
+        adminUser.passwordHash = bcrypt.hashSync(desiredPassword, 10);
+        shouldSave = true;
+      }
+    } else if (bcrypt.compareSync(legacyDefaultPassword, currentHash)) {
+      adminUser.passwordHash = bcrypt.hashSync(defaultPassword, 10);
+      shouldSave = true;
+    }
+  }
+
+  if (shouldSave) {
+    saveUsers(users);
+  }
 }
+
+ensureDefaultAdminUser();
 
 // Rebuilds categories.json using the first four images from each category
 function refreshCategories() {
