@@ -524,6 +524,122 @@ body.lightbox-open {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+@media (min-width: 768px) {
+  .hero--subpage .hero-content {
+    margin: clamp(5rem, 16vh, 8rem) auto 6rem;
+  }
+
+  .gallery.section .container {
+    max-width: min(1240px, 94vw);
+    padding: 0 0.5rem;
+  }
+
+  #gallery-grid,
+  #gallery-all,
+  .gallery .grid {
+    gap: 0.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .gallery.section .container {
+    max-width: min(1320px, 92vw);
+    padding: 0;
+  }
+
+  #gallery-grid,
+  #gallery-all,
+  .gallery .grid {
+    gap: 0.45rem;
+  }
+}
+.gallery.section {
+  background: var(--bg);
+}
+
+.gallery.section .container {
+  max-width: 1100px;
+}
+
+.gallery.section h2 {
+  margin-bottom: 0.75rem;
+}
+
+.section-lead {
+  margin: 0 auto 2.5rem;
+  max-width: 720px;
+  color: rgba(51, 51, 51, 0.75);
+}
+
+.category-description .container {
+  max-width: 960px;
+  text-align: left;
+}
+
+.category-description h2 {
+  font-size: clamp(2rem, 3vw, 2.5rem);
+  margin-bottom: 1.5rem;
+}
+
+.category-description h3 {
+  font-size: clamp(1.35rem, 2.5vw, 1.75rem);
+  margin: 2.5rem 0 1rem;
+}
+
+.category-description p {
+  margin: 0 0 1.25rem;
+}
+
+.category-highlights {
+  list-style: none;
+  padding: 0;
+  margin: 2rem 0;
+  display: grid;
+  gap: 1.25rem;
+}
+
+.category-highlights li {
+  position: relative;
+  padding-left: 2.5rem;
+  line-height: 1.7;
+}
+
+.category-highlights li::before {
+  content: "\2713";
+  position: absolute;
+  left: 0;
+  top: 0.1rem;
+  font-size: 1.1rem;
+  color: var(--accent);
+  background: var(--light);
+  border-radius: 50%;
+  width: 1.75rem;
+  height: 1.75rem;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+}
+
+.category-highlights strong {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+
+@media (max-width: 768px) {
+  .hero--subpage .hero-content {
+    margin: auto 1.25rem 3rem;
+    padding: 2rem;
+  }
+
+  .section-lead {
+    margin-bottom: 2rem;
+  }
+
+  .category-description .container {
+    padding: 0 0.5rem;
+  }
+}
 
 @media (min-width: 768px) {
   .hero--subpage .hero-content {
