@@ -9,10 +9,19 @@ require('dotenv').config();
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+const sessionTtl = Number(process.env.SESSION_TTL_MS) || 1000 * 60 * 60 * 6; // 6 godzin
+
 app.use(session({
   secret: process.env.SESSION_SECRET || 'tajny',
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  rolling: true,
+  name: 'vikimeble.sid',
+  cookie: {
+    httpOnly: true,
+    sameSite: 'lax',
+    maxAge: sessionTtl
+  }
 }));
 
 const publicDir = path.join(__dirname, '../docs');
@@ -125,15 +134,17 @@ function refreshCategories() {
 }
 
 function ensureAuth(req, res, next) {
-  console.log(req.session);
   if (req.session && req.session.loggedIn) return next();
+  if (req.originalUrl.startsWith('/api/')) {
+    return res.status(401).json({ error: 'Brak autoryzacji' });
+  }
   res.redirect('/login');
 }
 
 app.get('/api/gallery', (req, res) => {
   const { mode } = req.query;
   if (mode === 'full' && !(req.session && req.session.loggedIn)) {
-    return res.redirect('/login');
+    return res.status(401).json({ error: 'Brak autoryzacji' });
   }
   try {
     let images = loadGalleryData();
@@ -182,13 +193,31 @@ app.get('/api/refresh-categories', ensureAuth, (req, res) => {
 app.post('/api/login', (req, res) => {
   const { username, password } = req.body;
   const user = users.find(u => u.username === username);
-  if (user && bcrypt.compareSync(password, user.passwordHash)) {
+  if (!user || !bcrypt.compareSync(password, user.passwordHash)) {
+    return res.status(401).send('Błędny login lub hasło');
+  }
+
+  req.session.regenerate(err => {
+    if (err) {
+      console.error('Nie udało się zregenerować sesji', err);
+      return res.status(500).send('Błąd logowania');
+    }
+
     req.session.loggedIn = true;
     req.session.username = username;
-    res.redirect('/admin/dashboard.html');
-  } else {
-    res.status(401).send('Błędny login lub hasło');
-  }
+
+    req.session.save(saveErr => {
+      if (saveErr) {
+        console.error('Nie udało się zapisać sesji', saveErr);
+        return res.status(500).send('Błąd logowania');
+      }
+      const acceptsHtml = (req.headers.accept || '').includes('text/html');
+      if (acceptsHtml) {
+        return res.redirect('/admin/dashboard.html');
+      }
+      res.json({ ok: true, redirect: '/admin/dashboard.html' });
+    });
+  });
 });
 
 app.post('/api/register', (req, res) => {
@@ -208,6 +237,14 @@ app.get('/api/logout', (req, res) => {
     if (err) return res.status(500).send('Błąd wylogowania');
     res.redirect('/login');
   });
+});
+
+app.get('/api/session/keep-alive', ensureAuth, (req, res) => {
+  // Dotknięcie sesji zapewnia odświeżenie czasu życia ciasteczka.
+  if (typeof req.session.touch === 'function') {
+    req.session.touch();
+  }
+  res.json({ ok: true, user: req.session.username, expiresInMs: req.session.cookie.maxAge });
 });
 
 app.post('/api/upload', ensureAuth, upload.array('images'), (req, res) => {
