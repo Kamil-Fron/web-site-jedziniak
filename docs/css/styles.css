@@ -405,7 +405,6 @@ body {
     grid-template-columns: repeat(2, 1fr);
   }
 }
-
 @media (min-width: 768px) {
   .hero--subpage .hero-content {
     margin: clamp(5rem, 16vh, 8rem) auto 6rem;
@@ -435,7 +434,6 @@ body {
     gap: 0.45rem;
   }
 }
-
 .gallery.section {
   background: var(--bg);
 }
