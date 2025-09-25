@@ -627,8 +627,7 @@ body.lightbox-open {
   background: var(--bg);
   border-radius: 28px;
   padding: clamp(1.75rem, 3vw, 2.75rem);
-  box-shadow: 0 30px 60px rgba(15, 15, 15, 0.08);
-  border: 1px solid rgba(15, 15, 15, 0.04);
+  box-shadow: 0 12px 28px rgba(15, 15, 15, 0.06);
 }
 
 .gallery-category__title {
