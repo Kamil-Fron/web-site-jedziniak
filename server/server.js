@@ -44,6 +44,7 @@ app.get('/login', (req, res) => {
 const galleryFile = path.join(__dirname, 'gallery.json');
 const categoriesFile = path.join(__dirname, 'categories.json');
 const usersFile = path.join(__dirname, 'users.json');
+const testimonialsFile = path.join(__dirname, 'testimonials.json');
 const upload = multer({ dest: path.join(publicDir, 'images') });
 
 function loadGalleryData() {
@@ -106,11 +107,98 @@ function saveUsers(users) {
   fs.writeFileSync(usersFile, JSON.stringify(users, null, 2));
 }
 
+function normaliseTestimonials(raw) {
+  if (!Array.isArray(raw)) return [];
+  return raw
+    .map((item, index) => {
+      const id = Number(item.id);
+      const rating = Number(item.rating);
+      const order = Number(item.order);
+      return {
+        id: Number.isFinite(id) && id > 0 ? id : index + 1,
+        author: typeof item.author === 'string' ? item.author : '',
+        quote: typeof item.quote === 'string' ? item.quote : '',
+        rating: Number.isFinite(rating) ? Math.min(5, Math.max(1, Math.round(rating))) : undefined,
+        published: Boolean(item.published),
+        order: Number.isFinite(order) ? order : index + 1
+      };
+    })
+    .sort((a, b) => a.order - b.order)
+    .map((item, index) => ({ ...item, order: index + 1 }));
+}
+
+function loadTestimonials() {
+  try {
+    const data = JSON.parse(fs.readFileSync(testimonialsFile));
+    return normaliseTestimonials(data);
+  } catch (e) {
+    return [];
+  }
+}
+
+function saveTestimonials(testimonials) {
+  const normalised = normaliseTestimonials(testimonials);
+  fs.writeFileSync(testimonialsFile, JSON.stringify(normalised, null, 2));
+  return normalised;
+}
+
+function nextTestimonialId(items) {
+  return (
+    items.reduce((max, item) => {
+      const id = Number(item.id);
+      return Number.isFinite(id) && id > max ? id : max;
+    }, 0) + 1
+  );
+}
+
+function parseBoolean(value) {
+  if (typeof value === 'boolean') return value;
+  if (typeof value === 'string') {
+    const normalised = value.toLowerCase();
+    return normalised === 'true' || normalised === '1' || normalised === 'on' || normalised === 'yes';
+  }
+  return false;
+}
+
+function validateTestimonialPayload(payload) {
+  const errors = [];
+  const author = typeof payload.author === 'string' ? payload.author.trim() : '';
+  const quote = typeof payload.quote === 'string' ? payload.quote.trim() : '';
+  const ratingValue = Number(payload.rating);
+  const orderValue = payload.order === '' || payload.order === null || payload.order === undefined ? null : Number(payload.order);
+  const rating = Number.isFinite(ratingValue) ? Math.round(ratingValue) : NaN;
+  const order = Number.isFinite(orderValue) ? orderValue : null;
+
+  if (!author) {
+    errors.push('Imię i nazwisko autora jest wymagane.');
+  }
+
+  if (!quote) {
+    errors.push('Treść opinii jest wymagana.');
+  }
+
+  if (!Number.isFinite(rating) || rating < 1 || rating > 5) {
+    errors.push('Ocena musi być liczbą od 1 do 5.');
+  }
+
+  return {
+    errors,
+    data: {
+      author,
+      quote,
+      rating,
+      published: parseBoolean(payload.published),
+      order
+    }
+  };
+}
+
 const defaultUsername = process.env.ADMIN_USER || 'admin';
 const defaultPassword = process.env.ADMIN_PASSWORD || 'mariusz';
 const legacyDefaultPassword = 'admin';
 
 let users = loadUsers();
+let testimonials = loadTestimonials();
 
 function ensureDefaultAdminUser() {
   let shouldSave = false;
@@ -214,6 +302,93 @@ app.get('/api/categories', (req, res) => {
     if (err) return res.status(500).send('Błąd odczytu');
     res.json(JSON.parse(data));
   });
+});
+
+app.get('/api/testimonials', (req, res) => {
+  try {
+    const published = testimonials
+      .filter(item => item.published)
+      .sort((a, b) => a.order - b.order);
+    res.json(published);
+  } catch (error) {
+    console.error('Nie udało się odczytać opinii', error);
+    res.status(500).json({ error: 'Błąd odczytu opinii' });
+  }
+});
+
+app.get('/api/admin/testimonials', ensureAuth, (req, res) => {
+  res.json(testimonials);
+});
+
+app.post('/api/admin/testimonials', ensureAuth, (req, res) => {
+  const { errors, data } = validateTestimonialPayload(req.body || {});
+  if (errors.length) {
+    return res.status(400).json({ errors });
+  }
+
+  const newTestimonial = {
+    id: nextTestimonialId(testimonials),
+    author: data.author,
+    quote: data.quote,
+    rating: data.rating,
+    published: data.published,
+    order: data.order ?? testimonials.length + 1
+  };
+
+  testimonials = saveTestimonials([...testimonials, newTestimonial]);
+  const saved = testimonials.find(item => item.id === newTestimonial.id) || newTestimonial;
+  res.status(201).json(saved);
+});
+
+app.put('/api/admin/testimonials/:id', ensureAuth, (req, res) => {
+  const id = Number(req.params.id);
+  if (!Number.isFinite(id)) {
+    return res.status(400).json({ error: 'Nieprawidłowe ID opinii' });
+  }
+
+  const index = testimonials.findIndex(item => item.id === id);
+  if (index === -1) {
+    return res.status(404).json({ error: 'Opinia nie istnieje' });
+  }
+
+  const { errors, data } = validateTestimonialPayload(req.body || {});
+  if (errors.length) {
+    return res.status(400).json({ errors });
+  }
+
+  const updated = {
+    ...testimonials[index],
+    author: data.author,
+    quote: data.quote,
+    rating: data.rating,
+    published: data.published,
+    order: data.order ?? testimonials[index].order
+  };
+
+  testimonials = saveTestimonials([
+    ...testimonials.slice(0, index),
+    updated,
+    ...testimonials.slice(index + 1)
+  ]);
+
+  const saved = testimonials.find(item => item.id === id) || updated;
+  res.json(saved);
+});
+
+app.delete('/api/admin/testimonials/:id', ensureAuth, (req, res) => {
+  const id = Number(req.params.id);
+  if (!Number.isFinite(id)) {
+    return res.status(400).json({ error: 'Nieprawidłowe ID opinii' });
+  }
+
+  const index = testimonials.findIndex(item => item.id === id);
+  if (index === -1) {
+    return res.status(404).json({ error: 'Opinia nie istnieje' });
+  }
+
+  const removed = testimonials[index];
+  testimonials = saveTestimonials(testimonials.filter(item => item.id !== id));
+  res.json({ ok: true, removed });
 });
 
 app.get('/api/refresh-categories', ensureAuth, (req, res) => {

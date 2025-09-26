@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="../css/styles.css" />
 </head>
 <body class="admin-dashboard-body">
-  <nav class="nav nav--solid admin-nav">
+  <nav class="nav nav--solid nav--static admin-nav">
     <div class="admin-nav__left">
       <h1 class="logo"><a href="../index.html"><img src="../images/logo.png" alt="Vikimeble logo" /></a></h1>
       <span class="admin-nav__title">Panel administracyjny</span>
@@ -24,7 +24,7 @@
         <h2>Witaj w panelu zarządzania</h2>
         <p>Dodawaj i usuwaj zdjęcia z galerii oraz dbaj o aktualność oferty w kilku prostych krokach.</p>
       </div>
-      <div class="admin-hero__badge">Nowe: filtrowanie kategorii</div>
+      <div class="admin-hero__badge">Nowe: zarządzanie opiniami klientów</div>
     </section>
 
     <section class="admin-grid">
@@ -67,6 +67,57 @@
           <div class="admin-toolbar" id="gallery-toolbar"></div>
         </div>
         <div id="gallery-list" class="admin-gallery-list"></div>
+      </article>
+
+      <article class="admin-card admin-card--form admin-card--testimonials">
+        <div class="admin-card__header">
+          <div>
+            <h2>Dodaj opinię klienta</h2>
+            <p class="admin-card__subtitle">Uzupełnij dane, aby nowa opinia mogła pojawić się na stronie głównej.</p>
+          </div>
+        </div>
+        <form id="testimonial-form" class="admin-form admin-form--testimonial">
+          <div class="admin-form__grid admin-form__grid--testimonial">
+            <label class="admin-field">
+              <span>Autor</span>
+              <input type="text" name="author" maxlength="120" required />
+            </label>
+            <label class="admin-field">
+              <span>Ocena</span>
+              <select name="rating" required>
+                <option value="">Wybierz</option>
+                <option value="5">5</option>
+                <option value="4">4</option>
+                <option value="3">3</option>
+                <option value="2">2</option>
+                <option value="1">1</option>
+              </select>
+            </label>
+            <label class="admin-field admin-field--order">
+              <span>Kolejność</span>
+              <input type="number" name="order" min="1" step="1" placeholder="Automatyczna" />
+            </label>
+          </div>
+          <label class="admin-field admin-field--textarea">
+            <span>Treść opinii</span>
+            <textarea name="quote" rows="4" required></textarea>
+          </label>
+          <label class="admin-checkbox">
+            <input type="checkbox" name="published" checked />
+            <span>Publikuj opinię na stronie</span>
+          </label>
+          <button class="btn btn--wide" type="submit">Dodaj opinię</button>
+        </form>
+      </article>
+
+      <article class="admin-card admin-card--list admin-card--testimonials-list">
+        <div class="admin-card__header">
+          <div>
+            <h2>Zarządzaj opiniami</h2>
+            <p class="admin-card__subtitle">Edytuj treść, ocenę, kolejność oraz widoczność opinii.</p>
+          </div>
+        </div>
+        <div id="testimonials-list" class="admin-testimonials-list"></div>
       </article>
     </section>
   </main>
