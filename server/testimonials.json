@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "author": "Anna",
+    "quote": "Stół od Vikimeble to dzieło sztuki.",
+    "rating": 5,
+    "published": true,
+    "order": 1
+  },
+  {
+    "id": 2,
+    "author": "Michał",
+    "quote": "Profesjonalna obsługa i jakość.",
+    "rating": 5,
+    "published": true,
+    "order": 2
+  }
+]

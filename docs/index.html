@@ -4,106 +4,207 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Vikimeble</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./css/styles.css" />
 </head>
-<body>
-  <header class="hero">
-    <nav class="nav">
-      <h1 class="logo"><a href="index.html"><img src="./images/logo.png" alt="Vikimeble logo" /></a></h1>
-      <button class="menu-toggle" aria-label="Menu"></button>
-      <ul>
-        <li><a href="galeria.html">Galeria</a></li>
-        <li class="dropdown">
-          <a href="#">Oferta</a>
-          <ul class="submenu">
-            <li><a href="kuchnia.html">Kuchnia</a></li>
-            <li><a href="salon.html">Salon</a></li>
-            <li><a href="sypialnia.html">Sypialnia</a></li>
-            <li><a href="lazienka.html">Łazienka</a></li>
-            <li><a href="inne.html">Inne</a></li>
-          </ul>
-        </li>
-        <li><a href="#contact">Kontakt</a></li>
-        <li><a href="#about">O nas</a></li>
-        <li><a href="tel:787138178" class="phone">787 138 178</a></li>
-      </ul>
+<body class="home-page">
+  <header class="hero hero--home" id="top">
+    <nav class="nav" aria-label="Główne">
+      <div class="nav__inner container--wide">
+        <h1 class="logo"><a href="index.html"><img src="./images/logo.png" alt="Vikimeble logo" width="140" height="48" /></a></h1>
+        <button class="menu-toggle" aria-label="Menu" aria-expanded="false" aria-controls="primary-navigation"></button>
+        <ul id="primary-navigation">
+          <li><a href="galeria.html">Galeria</a></li>
+          <li class="dropdown">
+            <a href="#offer" aria-haspopup="true" aria-expanded="false">Oferta</a>
+            <ul class="submenu" aria-label="Podmenu oferta">
+              <li><a href="kuchnia.html">Kuchnia</a></li>
+              <li><a href="salon.html">Salon</a></li>
+              <li><a href="sypialnia.html">Sypialnia</a></li>
+              <li><a href="lazienka.html">Łazienka</a></li>
+              <li><a href="inne.html">Inne</a></li>
+            </ul>
+          </li>
+          <li><a href="#about">O nas</a></li>
+          <li><a href="#contact">Kontakt</a></li>
+          <li><a href="tel:787138178" class="phone">787 138 178</a></li>
+        </ul>
+      </div>
     </nav>
-    <div class="hero-content">
-      <h2>Tworzymy meble, które kochasz</h2>
-      <p>Designerskie projekty z naturalnego drewna prosto z naszej pracowni.</p>
+    <div class="hero-content hero-content--home container--wide">
+      <p class="hero-eyebrow">Pracownia mebli na wymiar</p>
+      <h1 class="hero-title">Rzemieślnicze meble tworzone dla Twojego wnętrza</h1>
+      <p class="hero-lead">Projektujemy i wykonujemy kuchnie, zabudowy oraz meble wolnostojące z najwyższej jakości drewna. Od pierwszego szkicu po montaż – dbamy o każdy detal.</p>
+      <div class="hero-actions">
+        <a href="#offer" class="btn">Poznaj ofertę</a>
+        <a href="#contact" class="btn btn--ghost">Umów konsultację</a>
+      </div>
     </div>
   </header>
 
-  <section id="offer" class="offer section reveal">
-    <h3>Oferta</h3>
-    <section class="category">
-      <h4>Kuchnia</h4>
-      <div id="kuchnia-preview" class="preview-grid"></div>
-    </section>
-    <section class="category">
-      <h4>Salon</h4>
-      <div id="salon-preview" class="preview-grid"></div>
-    </section>
-    <section class="category">
-      <h4>Sypialnia</h4>
-      <div id="sypialnia-preview" class="preview-grid"></div>
-    </section>
-    <section class="category">
-      <h4>Łazienka</h4>
-      <div id="lazienka-preview" class="preview-grid"></div>
-    </section>
-    <section class="category">
-      <h4>Inne</h4>
-      <div id="inne-preview" class="preview-grid"></div>
-    </section>
-  </section>
-
-  <section id="about" class="about section reveal">
-    <div class="container">
-      <h3>O nas</h3>
-      <p>Vikimeble to rodzinna manufaktura mebli premium. Łączymy tradycyjne rzemiosło z
-        nowoczesnym designem, tworząc unikalne elementy wystroju, które przetrwają pokolenia.</p>
-    </div>
-  </section>
-  <section id="testimonials" class="testimonials section reveal">
-    <h3>Opinie klientów</h3>
-    <div class="cards">
-      <article class="card">
-        <p>„Stół od Vikimeble to dzieło sztuki. Solidny i przepiękny.”</p>
-        <span class="author">– Anna</span>
-      </article>
-      <article class="card">
-        <p>„Profesjonalna obsługa i meble najwyższej jakości.”</p>
-        <span class="author">– Michał</span>
-      </article>
-      <article class="card">
-        <p>„Nasza kuchnia wygląda teraz jak z katalogu.”</p>
-        <span class="author">– Katarzyna</span>
-      </article>
-    </div>
-  </section>
-
-  <section id="contact" class="contact section reveal">
-    <h3>Kontakt</h3>
-    <div class="contact-wrapper">
-      <form class="contact-form">
-        <input type="text" name="name" placeholder="Imię i nazwisko" required />
-        <input type="email" name="email" placeholder="Email" required />
-        <textarea name="message" placeholder="Wiadomość" required></textarea>
-        <button type="submit" class="btn">Wyślij</button>
-      </form>
-      <div class="contact-info">
-        <p><strong>Vikimeble Firma Produkcyjno-Usługowa Piotr Jedziniak</strong></p>
-        <p>39-208 Głobikowa 99</p>
-        <p>tel. 787 138 178<br />biuro@vikimeble.pl</p>
+  <main>
+    <section id="offer" class="categories section reveal">
+      <div class="container container--wide">
+        <div class="section-heading">
+          <p class="section-eyebrow">Oferta</p>
+          <h2>Meble skrojone pod Twoją przestrzeń</h2>
+          <p class="section-lead">Tworzymy autorskie projekty dopasowane do stylu wnętrza i codziennych rytuałów domowników. Zobacz, w czym się specjalizujemy.</p>
+        </div>
+        <div class="category-grid" role="list">
+          <article class="category-card" role="listitem">
+            <a href="kuchnia.html" class="category-card__link">
+              <div class="category-card__media" id="kuchnia-preview" aria-hidden="true"></div>
+              <div class="category-card__content">
+                <h3>Kuchnie na wymiar</h3>
+                <p>Precyzyjnie zaplanowane zabudowy z naturalnych materiałów, które organizują przestrzeń pracy.</p>
+                <span class="category-card__cta">Zobacz realizacje</span>
+              </div>
+            </a>
+          </article>
+          <article class="category-card" role="listitem">
+            <a href="lazienka.html" class="category-card__link">
+              <div class="category-card__media" id="lazienka-preview" aria-hidden="true"></div>
+              <div class="category-card__content">
+                <h3>Łazienki</h3>
+                <p>Zabudowy odporne na wilgoć, łączące funkcjonalność z wysmakowanymi detalami.</p>
+                <span class="category-card__cta">Zobacz realizacje</span>
+              </div>
+            </a>
+          </article>
+          <article class="category-card" role="listitem">
+            <a href="salon.html" class="category-card__link">
+              <div class="category-card__media" id="salon-preview" aria-hidden="true"></div>
+              <div class="category-card__content">
+                <h3>Salony i strefy dzienne</h3>
+                <p>Biblioteki, meble RTV i stoły, które budują charakter wspólnych przestrzeni.</p>
+                <span class="category-card__cta">Zobacz realizacje</span>
+              </div>
+            </a>
+          </article>
+          <article class="category-card" role="listitem">
+            <a href="sypialnia.html" class="category-card__link">
+              <div class="category-card__media" id="sypialnia-preview" aria-hidden="true"></div>
+              <div class="category-card__content">
+                <h3>Sypialnie i garderoby</h3>
+                <p>Atmosferyczne wnętrza z idealnie dopasowaną zabudową i przemyślanym oświetleniem.</p>
+                <span class="category-card__cta">Zobacz realizacje</span>
+              </div>
+            </a>
+          </article>
+          <article class="category-card" role="listitem">
+            <a href="inne.html" class="category-card__link">
+              <div class="category-card__media" id="inne-preview" aria-hidden="true"></div>
+              <div class="category-card__content">
+                <h3>Nietypowe realizacje</h3>
+                <p>Indywidualne projekty do biur, wnęk czy przestrzeni komercyjnych.</p>
+                <span class="category-card__cta">Zobacz realizacje</span>
+              </div>
+            </a>
+          </article>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+
+    <section id="about" class="about section reveal">
+      <div class="container container--narrow">
+        <div class="section-heading section-heading--left">
+          <p class="section-eyebrow">O nas</p>
+          <h2>Rodzinna pracownia z sercem do drewna</h2>
+          <p class="section-lead">Łączymy tradycję stolarską z nowoczesnym wzornictwem, tworząc meble, które doskonale wpisują się w codzienność naszych klientów.</p>
+        </div>
+        <div class="about__content">
+          <div class="about__text">
+            <p>Każdy projekt zaczynamy od rozmowy i poznania rytmu życia domowników. Dzięki temu powstają meble, które idealnie odpowiadają na potrzeby użytkowników i harmonijnie współgrają z architekturą wnętrza.</p>
+            <p>Projektujemy kompleksowo – od koncepcji, przez dokumentację techniczną, po produkcję i montaż. Kontrolujemy każdy etap prac, dbając o spójność detali i najwyższą jakość wykończenia.</p>
+            <p>Wykorzystujemy naturalne materiały i rzemieślnicze techniki, aby meble służyły przez lata. Zaufanie klientów budujemy transparentną komunikacją i terminowością.</p>
+          </div>
+          <ul class="about__highlights" aria-label="Nasze wyróżniki">
+            <li><span aria-hidden="true">✓</span><span>Rzemiosło i precyzja detalu</span></li>
+            <li><span aria-hidden="true">✓</span><span>Naturalne materiały klasy premium</span></li>
+            <li><span aria-hidden="true">✓</span><span>Projekty dopasowane do stylu życia</span></li>
+            <li><span aria-hidden="true">✓</span><span>Pełna opieka od projektu po montaż</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="testimonials" class="testimonials section reveal">
+      <div class="container container--wide">
+        <div class="section-heading">
+          <p class="section-eyebrow">Opinie klientów</p>
+          <h2>Docenione przez osoby, które nam zaufały</h2>
+          <p class="section-lead">Realizacje Vikimeble trafiają do domów w całej Polsce. Tak mówią o współpracy klienci, którzy wybrali nasze projekty.</p>
+        </div>
+        <div class="testimonials-carousel" role="region" aria-label="Opinie klientów">
+          <button type="button" class="testimonials-control testimonials-control--prev" aria-label="Poprzednia opinia" disabled>
+            <span aria-hidden="true">&#8592;</span>
+          </button>
+          <div class="testimonials-viewport">
+            <div class="testimonials-track" aria-live="polite"></div>
+          </div>
+          <button type="button" class="testimonials-control testimonials-control--next" aria-label="Następna opinia" disabled>
+            <span aria-hidden="true">&#8594;</span>
+          </button>
+        </div>
+        <p class="testimonials-empty" hidden>Wkrótce pojawią się tutaj pierwsze opinie.</p>
+      </div>
+    </section>
+
+    <section id="contact" class="contact section reveal">
+      <div class="container container--wide">
+        <div class="section-heading section-heading--left">
+          <p class="section-eyebrow">Kontakt</p>
+          <h2>Porozmawiajmy o Twojej przestrzeni</h2>
+          <p class="section-lead">Zostaw wiadomość, a przygotujemy wstępny plan działania i termin spotkania w showroomie lub online.</p>
+        </div>
+        <div class="contact-wrapper">
+          <form class="contact-form" aria-label="Formularz kontaktowy">
+            <label class="contact-field">
+              <span>Imię i nazwisko</span>
+              <input type="text" name="name" autocomplete="name" required />
+            </label>
+            <label class="contact-field">
+              <span>Adres e-mail</span>
+              <input type="email" name="email" autocomplete="email" required />
+            </label>
+            <label class="contact-field contact-field--textarea">
+              <span>Wiadomość</span>
+              <textarea name="message" rows="4" required></textarea>
+            </label>
+            <button type="submit" class="btn contact-submit">Wyślij wiadomość</button>
+          </form>
+          <div class="contact-info" aria-label="Dane kontaktowe">
+            <div class="contact-card">
+              <h3>Vikimeble</h3>
+              <p>Firma Produkcyjno-Usługowa Piotr Jedziniak</p>
+              <address>
+                39-208 Głobikowa 99<br />
+                Polska
+              </address>
+              <p>
+                <a href="tel:787138178" class="contact-link">tel. 787 138 178</a><br />
+                <a href="mailto:biuro@vikimeble.pl" class="contact-link">biuro@vikimeble.pl</a>
+              </p>
+            </div>
+            <div class="contact-card">
+              <h3>Godziny kontaktu</h3>
+              <p>Poniedziałek – Piątek: 8:00 – 17:00</p>
+              <p>Sobota: 9:00 – 13:00</p>
+              <p>Działamy na terenie całej Polski.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 
   <footer class="footer">
-    <p>&copy; <span id="year"></span> Vikimeble</p>
-    <a href="/login">Panel administracyjny</a>
+    <div class="container container--wide">
+      <p>&copy; <span id="year"></span> Vikimeble</p>
+      <a href="/login" class="footer-link">Panel administracyjny</a>
+    </div>
   </footer>
 
   <script src="./js/menu.js"></script>
